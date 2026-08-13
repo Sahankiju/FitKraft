@@ -13,6 +13,7 @@ export const getAllProducts = async (c: Context) => {
 export const createProduct = async (c: Context) => {
     // Logic to create a new product in the database
     const body = await c.req.json();
+    console.log("BODY:", body);
     const result = createProductSchema.safeParse(body);
     if (!result.success) {
         return c.json({ 

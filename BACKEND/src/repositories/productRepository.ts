@@ -1,4 +1,4 @@
-import { create } from "node:domain";
+
 import { db } from "../db/db_connection"
 import { product } from "../db/schema/product_schema";
 import type { CreateProduct } from "../zodSchema/productSchema";

@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import productRoutes from './routes/productRoutes';
+import categoryRoutes from './routes/categoryRoutes';
 
 
 const app = new Hono();
@@ -21,5 +22,6 @@ app.get('/', (c) => {
 });
 
 app.route('/',productRoutes);
+app.route('/', categoryRoutes);
 
 export default app;
