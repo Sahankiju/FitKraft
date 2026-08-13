@@ -8,7 +8,12 @@ if (!connectionString) {
   throw new Error("Missing DB_URL or DATABASE_URL environment variable");
 }
 
-const client = postgres(connectionString);
+const client = postgres(connectionString, {
+  max: 10,                // max number of connections in the pool
+  idle_timeout: 20,       // close idle connections after 20s
+  connect_timeout: 10,    // fail fast if a connection can't be established in 10s
+  ssl: "require",         // Aiven requires SSL — 'require' or { rejectUnauthorized: false }
+});
 
 export const db = drizzle({
   client,

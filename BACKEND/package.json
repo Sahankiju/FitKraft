@@ -5,12 +5,14 @@
   "private": true,
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/node": "^26.2.0",
     "drizzle-kit": "0.31.4"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
+    "better-auth": "^1.6.27",
     "drizzle-orm": "0.44.7",
     "hono": "^4.13.1",
     "postgres": "^3.4.9"
