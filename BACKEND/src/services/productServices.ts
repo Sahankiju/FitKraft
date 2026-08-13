@@ -1,4 +1,5 @@
 import { productRepository } from "../repositories/productRepository";
+import type { CreateProduct } from "../zodSchema/productSchema";
 
 export const productServices = {
   getAllProducts: async () => {
@@ -6,7 +7,7 @@ export const productServices = {
     const products = await productRepository.getAllProducts();
     return products;
   },
-  createProduct: async (productData: any) => {
+  createProduct: async (productData: CreateProduct) => {
     // Logic to create a new product in the database
     const result = await productRepository.createProduct(productData);
     return result;

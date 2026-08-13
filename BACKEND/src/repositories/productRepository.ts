@@ -1,6 +1,7 @@
 import { create } from "node:domain";
 import { db } from "../db/db_connection"
 import { product } from "../db/schema/product_schema";
+import type { CreateProduct } from "../zodSchema/productSchema";
 
 
 export const productRepository = {
@@ -9,7 +10,7 @@ export const productRepository = {
     return db.select().from(product);
   },
 
-  createProduct: async (productData: any) => {
+  createProduct: async (productData: CreateProduct) => {
     // Logic to create a new product in the database
     const result = await db.insert(product).values(productData);
     return result;
