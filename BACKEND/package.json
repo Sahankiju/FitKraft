@@ -3,10 +3,17 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "db:studio":"drizzle-kit studio",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/node": "^26.2.0",
-    "drizzle-kit": "0.31.4"
+    "@types/pg": "^8.21.0",
+    "drizzle-kit": "^0.31.10"
   },
   "peerDependencies": {
     "typescript": "^5"
@@ -15,6 +22,7 @@
     "better-auth": "^1.6.27",
     "drizzle-orm": "0.44.7",
     "hono": "^4.13.1",
+    "pg": "^8.23.0",
     "postgres": "^3.4.9"
   }
 }
