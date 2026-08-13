@@ -2,7 +2,7 @@ import "dotenv/config";
 import app from "./app";
 import { verifyConnection } from "./db/db_connection";
 
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = Number(process.env.PORT) || 8000;
 
 async function start() {
   try {
