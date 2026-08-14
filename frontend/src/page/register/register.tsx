@@ -18,19 +18,23 @@ export default function SignUp() {
   const signUp = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    await authClient.signUp.email(
-      {
+    const { error } = await authClient.emailOtp.sendVerificationOtp({
+      email,
+      type: "email-verification",
+    });
+
+    console.log("OTP result:", error);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    navigate("/verifyEmail", {
+      state: {
         email,
-        password,
-        name,
       },
-      {
-        onError: (ctx) => {
-          alert(ctx.error);
-        },
-      }
-    );
-    navigate("/");
+    });
   };
 
   return (

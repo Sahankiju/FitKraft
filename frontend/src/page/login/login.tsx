@@ -54,7 +54,7 @@ export default function SignIn() {
         <button type="submit">
           Sign In
         </button>
-        <button onClick={loginWithGoogle}>Register With Google</button>
+        <button onClick={loginWithGoogle}>Login With Google</button>
       </form>
     </div>
   );
