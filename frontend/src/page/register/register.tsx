@@ -1,6 +1,20 @@
 import { useState, type SubmitEvent } from "react";
 import { useNavigate } from "react-router";
 import { authClient } from "../../lib/auth-client";
+import { XIcon, CheckIcon } from "@phosphor-icons/react";
+import {
+  Button,
+  Center,
+  Container,
+  Divider,
+  Paper,
+  PasswordInput,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -12,63 +26,107 @@ export default function SignUp() {
   const registerWithGoogle = async () => {
     await authClient.signIn.social({
       provider: "google",
+      callbackURL: "http://localhost:5173/",
     });
   };
 
   const signUp = async (e: SubmitEvent) => {
     e.preventDefault();
-
     const { error } = await authClient.emailOtp.sendVerificationOtp({
       email,
       type: "email-verification",
     });
 
-    console.log("OTP result:", error);
-
     if (error) {
-      alert(error.message);
+      notifications.show({
+        title: "Sign Up Failed",
+        message: error.message,
+        color: "red",
+        icon: <XIcon size={20} />,
+      });
+
       return;
     }
+    
+    notifications.show({
+      title: "OTP Sent",
+      message: "Check your email for the verification code.",
+      color: "green",
+      icon: <CheckIcon size={20} />,
+    });
 
     navigate("/verifyEmail", {
       state: {
         email,
+        name,
+        password,
       },
     });
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
+    <Container size={420} my={80}>
+      <Center h="calc(100vh - 160px)">
+        <Paper
+          withBorder
+          shadow="md"
+          p={30}
+          radius="md"
+          w="100%"
+        >
+          <form onSubmit={signUp}>
+            <Stack>
+              <Title order={2} ta="center">
+                Create an Account
+              </Title>
 
-      <form onSubmit={signUp}>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
-        />
+              <Text size="sm" c="dimmed" ta="center">
+                Create your FitKraft account to get started.
+              </Text>
 
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
+              <TextInput
+                label="Name"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.currentTarget.value)}
+                required
+              />
 
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
+              <TextInput
+                label="Email"
+                placeholder="Enter your email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.currentTarget.value)}
+                required
+              />
 
-        <button type="submit">
-          Sign Up
-        </button>
+              <PasswordInput
+                label="Password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.currentTarget.value)}
+                required
+              />
 
-        <button onClick={registerWithGoogle}>Register With Google</button>
-      </form>
-    </div>
+              <Button type="submit" fullWidth>
+                Sign Up
+              </Button>
+
+              <Divider label="OR" labelPosition="center" />
+
+              <Button
+                type="button"
+                variant="default"
+                fullWidth
+                onClick={registerWithGoogle}
+              >
+                Continue with Google
+              </Button>
+            </Stack>
+          </form>
+        </Paper>
+      </Center>
+    </Container>
   );
 }

@@ -3,18 +3,23 @@ import SignIn from "./page/login/login";
 import Register from "./page/register/register";
 import VerifyEmail from "./page/verifications/verifyEmail";
 import HomePage from "./page/home/homePage";
+import { Notifications } from "@mantine/notifications";
+import "@mantine/notifications/styles.css";
+import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
 
-function App() {
+export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/verifyEmail" element={<VerifyEmail />} />
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-    </BrowserRouter>
+    <MantineProvider>
+      <BrowserRouter>
+        <Notifications />
+        <Routes>
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/verifyEmail" element={<VerifyEmail />} />
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
+    </MantineProvider>
   );
 }
-
-export default App;

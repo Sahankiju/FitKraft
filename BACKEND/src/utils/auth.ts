@@ -32,20 +32,28 @@ export const auth = betterAuth({
   plugins: [
     emailOTP({
         async sendVerificationOTP({ email, otp, type }) {
-            if (type === "email-verification") {
-            await resend.emails.send({
-                from: "onboarding@resend.dev",
-                to: email,
-                subject: "Verify your FitKraft email",
-                html: `
-                <h2>FitKraft Email Verification</h2>
-                <p>Your verification code is:</p>
-                <h1>${otp}</h1>
-                <p>This code is for verifying your email address.</p>
-                `,
-            });
-            }
-        },
+  console.log("🔥 sendVerificationOTP called");
+  console.log("📧 Email:", email);
+  console.log("🔢 OTP:", otp);
+  console.log("📌 Type:", type);
+
+  if (type === "email-verification") {
+    const { data, error } = await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: email,
+      subject: "Verify your FitKraft email",
+      html: `
+        <h2>FitKraft Email Verification</h2>
+        <p>Your verification code is:</p>
+        <h1>${otp}</h1>
+      `,
+    });
+
+    console.log("Resend data:", data);
+    console.log("Resend error:", error);
+  }
+}
+      
     }),
   ],
 });
