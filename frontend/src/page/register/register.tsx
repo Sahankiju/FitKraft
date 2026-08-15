@@ -32,11 +32,12 @@ export default function SignUp() {
 
   const signUp = async (e: SubmitEvent) => {
     e.preventDefault();
-    const { error } = await authClient.emailOtp.sendVerificationOtp({
+    console.log("Sign Up initiated with:", { email, name, password });
+    const { error } = await authClient.signUp.email({
       email,
-      type: "email-verification",
+      password,
+      name,
     });
-
     if (error) {
       notifications.show({
         title: "Sign Up Failed",

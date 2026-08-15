@@ -1,5 +1,5 @@
 import { betterAuth } from "better-auth";
-import { emailOTP } from "better-auth/plugins"
+import { emailOTP } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db/db_connection";
 import { schema } from "../db/schema/schema";
@@ -31,29 +31,35 @@ export const auth = betterAuth({
 
   plugins: [
     emailOTP({
-        async sendVerificationOTP({ email, otp, type }) {
-  console.log("🔥 sendVerificationOTP called");
-  console.log("📧 Email:", email);
-  console.log("🔢 OTP:", otp);
-  console.log("📌 Type:", type);
+      sendVerificationOnSignUp: true,
+      async sendVerificationOTP({ email, otp, type }) {
+        console.log("Sending verification OTP:", { email, otp, type });
+        if (type !== "email-verification") return;
 
-  if (type === "email-verification") {
-    const { data, error } = await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: email,
-      subject: "Verify your FitKraft email",
-      html: `
-        <h2>FitKraft Email Verification</h2>
-        <p>Your verification code is:</p>
-        <h1>${otp}</h1>
-      `,
-    });
+        const fromEmail = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
 
-    console.log("Resend data:", data);
-    console.log("Resend error:", error);
-  }
-}
-      
+        const { data, error } = await resend.emails.send({
+          from: fromEmail,
+          to: email,
+          subject: "Verify your FitKraft email",
+          html: `
+            <h2>FitKraft Email Verification</h2>
+            <p>Your verification code is:</p>
+            <h1>${otp}</h1>
+          `,
+        });
+
+        console.log("Resend data:", data);
+        console.log("Resend error:", error);
+
+        if (error) {
+          throw new Error(`Failed to send verification email: ${error.message}`);
+        }
+
+        if (!data?.id) {
+          throw new Error("Verification email was not accepted by Resend.");
+        }
+      },
     }),
   ],
 });

@@ -11,6 +11,7 @@ import {
   Stack,
   Text,
   Title,
+  Anchor,
 } from "@mantine/core";
 
 export default function VerifyEmail() {
@@ -19,7 +20,7 @@ export default function VerifyEmail() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { email, name, password } = location.state || {};
+  const { email } = location.state || {};
 
   const verifyOtp = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -33,23 +34,6 @@ export default function VerifyEmail() {
       notifications.show({
         title: "Verification Failed",
         message: error.message,
-        color: "red",
-        icon: <XIcon size={20} />,
-      });
-
-      return;
-    }
-
-    const { error: signUpError } = await authClient.signUp.email({
-      email,
-      password,
-      name,
-    });
-
-    if (signUpError) {
-      notifications.show({
-        title: "Sign Up Failed",
-        message: signUpError.message,
         color: "red",
         icon: <XIcon size={20} />,
       });
@@ -89,6 +73,15 @@ export default function VerifyEmail() {
             <Button type="submit" fullWidth>
               Verify
             </Button>
+            
+            <Anchor
+              component="button"
+              type="button"
+              size="sm"
+              onClick={() => navigate("/register")}
+            >
+              Go back to Register
+            </Anchor>
           </Stack>
         </form>
       </Paper>
