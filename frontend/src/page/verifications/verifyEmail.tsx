@@ -67,7 +67,8 @@ export default function VerifyEmail() {
               type="number"
               value={otp}
               onChange={setOtp}
-              size="md"
+              size="sm"
+              gap="xs"
             />
 
             <Button type="submit" fullWidth>

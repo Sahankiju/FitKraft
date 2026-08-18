@@ -6,7 +6,7 @@ const PORT = Number(process.env.PORT) || 8000;
 
 async function start() {
   try {
-    // Verify database connection before starting server
+    
     const isConnected = await verifyConnection();
 
     if (!isConnected) {

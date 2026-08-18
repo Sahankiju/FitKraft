@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { emailOTP } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db/db_connection";
+import { eq } from "drizzle-orm";
 import { schema } from "../db/schema/schema";
 import { Resend } from "resend";
 
@@ -22,6 +23,17 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
+    onExistingUserSignUp: async ({ user }, request) => {
+      const fromEmail = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
+
+      await resend.emails.send({
+        from: fromEmail,
+        to: user.email,
+        subject: "Already Sign-up on FitKraft",
+        text: `Someone tried to create an account using your email address.
+If this was you, try signing in instead.`,
+      });
+    },
   },
 
   database: drizzleAdapter(db, {
@@ -36,9 +48,15 @@ export const auth = betterAuth({
         console.log("Sending verification OTP:", { email, otp, type });
         if (type !== "email-verification") return;
 
+        const existingUser = await db.query.user.findFirst({
+          where: eq(schema.user.email, email),
+        });
+
+        if (existingUser?.emailVerified) return;
+
         const fromEmail = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
 
-        const { data, error } = await resend.emails.send({
+        await resend.emails.send({
           from: fromEmail,
           to: email,
           subject: "Verify your FitKraft email",
@@ -48,17 +66,6 @@ export const auth = betterAuth({
             <h1>${otp}</h1>
           `,
         });
-
-        console.log("Resend data:", data);
-        console.log("Resend error:", error);
-
-        if (error) {
-          throw new Error(`Failed to send verification email: ${error.message}`);
-        }
-
-        if (!data?.id) {
-          throw new Error("Verification email was not accepted by Resend.");
-        }
       },
     }),
   ],

@@ -97,4 +97,7 @@ export const schema = {
   session,
   account,
   verification,
+  userRelations,
+  sessionRelations,
+  accountRelations,
 };
