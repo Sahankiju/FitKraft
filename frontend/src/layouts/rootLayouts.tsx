@@ -4,9 +4,9 @@ import { Navbar } from "../components/site/Navbar";
 
 export default function RootLayout() {
   return (
-    <AppShell header={{ height: 70 }}>
+    <AppShell header={{ height: 70 }} padding={0}>
       <Navbar />
-      <AppShell.Main p={0} w="100%">
+      <AppShell.Main p={0} m={0}>
         <Outlet />
       </AppShell.Main>
     </AppShell>

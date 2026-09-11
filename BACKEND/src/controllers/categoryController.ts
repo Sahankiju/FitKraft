@@ -25,3 +25,4 @@ export const createCategory = async (c: Context) => {
     const newCategory = await categoryServices.createCategory(categoryData);
     return c.json(newCategory);
 }
+    

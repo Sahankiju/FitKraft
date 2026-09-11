@@ -11,5 +11,6 @@ export const productServices = {
     // Logic to create a new product in the database
     const result = await productRepository.createProduct(productData);
     return result;
-  }
+  },
+  
 }
