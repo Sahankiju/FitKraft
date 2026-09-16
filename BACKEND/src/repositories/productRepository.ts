@@ -15,6 +15,5 @@ export const productRepository = {
     const result = await db.insert(product).values(productData);
     return result;
   },
-
 };
 

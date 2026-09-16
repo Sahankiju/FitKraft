@@ -1,10 +1,12 @@
-import { integer, varchar, pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
+import { integer, varchar, pgTable, timestamp, uuid, text } from "drizzle-orm/pg-core";
+import { user } from "./schema";
 
 export const orders = pgTable(
   "orders",
   {
     id: uuid("id").primaryKey().defaultRandom(),
-    user_id: uuid("user_id").notNull(),
+    user_id: text("user_id").notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
     total_amount: integer("total_amount").notNull(),
     status: varchar("status", { length: 256 }).notNull(),
     payment_status: varchar("payment_status", { length: 256 }).notNull(),

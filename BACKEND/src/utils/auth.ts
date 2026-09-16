@@ -5,6 +5,7 @@ import { db } from "../db/db_connection";
 import { eq } from "drizzle-orm";
 import { schema } from "../db/schema/schema";
 import { Resend } from "resend";
+import { admin } from "better-auth/plugins"
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -68,5 +69,6 @@ If this was you, try signing in instead.`,
         });
       },
     }),
+    admin() 
   ],
 });

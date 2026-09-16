@@ -12,5 +12,4 @@ export const productServices = {
     const result = await productRepository.createProduct(productData);
     return result;
   },
-  
 }
