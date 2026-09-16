@@ -4,6 +4,7 @@ import { cors } from 'hono/cors';
 
 import productRoutes from './routes/productRoutes';
 import categoryRoutes from './routes/categoryRoutes';
+import { adminOnly } from './middlewares/admin';
 
 import { auth } from "./utils/auth";
 
@@ -17,6 +18,7 @@ app.use(
     credentials: true,
   })
 );
+app.use("/api/admin/*", adminOnly);
 
 
 // Better Auth
