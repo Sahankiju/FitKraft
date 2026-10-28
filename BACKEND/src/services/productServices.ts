@@ -2,9 +2,9 @@ import { productRepository } from "../repositories/productRepository";
 import type { CreateProduct } from "../zodSchema/productSchema";
 
 export const productServices = {
-  getAllProducts: async (options: { featured?: boolean; limit: number }) => {
+  getProducts: async (options: { featured?: boolean; limit: number }) => {
     // Logic to fetch all products from the database
-    const products = await productRepository.getAllProducts(options);
+    const products = await productRepository.getProducts(options);
     return products;
   },
   createProduct: async (productData: CreateProduct) => {

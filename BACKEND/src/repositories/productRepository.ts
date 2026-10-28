@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 
 
 export const productRepository = {
-  getAllProducts: async (options: {
+  getProducts: async (options: {
     featured?: boolean;
     limit: number;
 }) => {

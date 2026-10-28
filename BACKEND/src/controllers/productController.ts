@@ -4,11 +4,11 @@ import { productServices } from "../services/productServices";
 import { createProductSchema } from "../zodSchema/productSchema";
 import {z } from "zod";
 
-export const getAllProducts = async (c: Context) => {
+export const getProducts = async (c: Context) => {
     // Logic to fetch all products from the database
     const featured = c.req.query("featured");
     const limit = Number(c.req.query("limit")) || 10;
-    const products = await productServices.getAllProducts({ featured:featured==="true"?true:undefined, limit });
+    const products = await productServices.getProducts({ featured:featured==="true"?true:undefined, limit });
     return c.json(products);
 }
 
