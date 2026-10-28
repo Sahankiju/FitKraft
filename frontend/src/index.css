@@ -1,63 +1,51 @@
 @import "tailwindcss";
 
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  color-scheme: light;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Backgrounds */
+  --bg: #FFF8F1;
+  --surface: #FFFFFF;
+  --soft: #FCEBD8;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Text */
+  --ink: #2E1F1A;
+  --muted: #7C6459;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Borders */
+  --line: #EBD7C6;
+
+  /* Brand palette */
+  --brand: #7D5A50;
+  --clay: #B4846C;
+  --peach: #E5B299;
+  --cream: #FCDEC0;
+  --on-brand: #FFF8F1;
+
+  /* Status colors */
+  --ok: #4C7A5A;
+  --ok-bg: #E3EFE6;
+  --warn-bg: #FBE9C9;
+  --danger: #A5473B;
+
+  /* Typography */
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Shadows */
+  --shadow: 0 1px 2px rgba(80, 50, 35, 0.06),
+            0 8px 24px rgba(80, 50, 35, 0.07);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
 }
+
 body {
-  margin: 0;
-}
-
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden; 
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
 }

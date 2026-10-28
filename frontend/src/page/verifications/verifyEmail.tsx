@@ -1,5 +1,5 @@
 import { useState, type SubmitEvent } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { authClient } from "../../lib/auth-client";
 import { XIcon, CheckIcon } from "@phosphor-icons/react";
 import { notifications } from "@mantine/notifications";

@@ -2,8 +2,9 @@ import { RouterProvider } from "react-router-dom";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import "@mantine/core/styles.css";
-import { MantineProvider } from "@mantine/core";
 import { router } from "./routes/router";
+import { MantineProvider } from "@mantine/core";
+
 
 export default function App() {
   return (

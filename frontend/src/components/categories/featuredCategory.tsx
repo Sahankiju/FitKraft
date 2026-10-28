@@ -18,13 +18,13 @@ const categories = [
 
 export function FeaturedCategories() {
   return (
-    <Group justify="space-between" align="center" w="100%" mt={30} >
+    <Group justify="space-between" align="center" w="100%" mt={{ base: 20, md: 30 }} >
       {categories.map((category) => (
-        <Card  key={category.name}>
+        <Card  key={category.name} radius="md" bg="var(--bg) ">
           <Card.Section>
-            <Image src={category.image} h={180}/>
+            <Image src={category.image} h={{ base: 100, md: 180 }}  />
           </Card.Section>
-          <Text fw={400} size="md" ta="center" mt="xs">
+          <Text fw={{ base: 250, md: 400 }} fz={{ base: "xs", md: "md" }} ta="center" mt="xs">
             {category.name}
           </Text>
         </Card>

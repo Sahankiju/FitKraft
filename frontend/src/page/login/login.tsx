@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { authClient } from "../../lib/auth-client";
 import {
   Button,
@@ -58,7 +58,6 @@ export default function SignIn() {
               <Title order={2} ta="center">
                 Welcome Back
               </Title>
-
               <Text size="sm" c="dimmed" ta="center">
                 Sign in to your FitKraft account.
               </Text>
