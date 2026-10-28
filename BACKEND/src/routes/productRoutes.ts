@@ -6,5 +6,7 @@ const productRoutes = new Hono();
 
 productRoutes.get("/products", getAllProducts);
 productRoutes.post("/products", createProduct);
+productRoutes.get("/products")
+
 
 export default productRoutes;

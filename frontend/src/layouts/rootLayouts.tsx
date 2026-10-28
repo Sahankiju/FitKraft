@@ -1,5 +1,5 @@
 import { AppShell } from "@mantine/core";
-import { Outlet } from "react-router";
+import { Outlet } from "react-router-dom";
 import { Navbar } from "../components/site/Navbar";
 
 export default function RootLayout() {

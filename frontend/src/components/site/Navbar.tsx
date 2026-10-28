@@ -1,5 +1,5 @@
 import { AppShell, Stack, Group, Text, Anchor, Breadcrumbs } from "@mantine/core";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 
 export function Navbar() {
   const location = useLocation();

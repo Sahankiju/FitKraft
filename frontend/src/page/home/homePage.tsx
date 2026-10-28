@@ -11,7 +11,7 @@ import {
   // Card,
   // Image,
 } from "@mantine/core";
-import image from "../../assets/image/landingPage.avif";
+import image from "../../assets/Image/landingPage.avif";
 import { FeaturedCategories } from "../../components/categories/featuredCategory";  
 
 
