@@ -11,6 +11,7 @@ export const product = pgTable(
     description: varchar("description", { length: 256 }),
     price: integer("price").notNull(),
     thumbnail: varchar("thumbnail", { length: 256 }),
+    featured:boolean("featured").default(false).notNull(),
     category_id: varchar("category_id", { length: 256 }).notNull()
     .references(() => category.id, { onDelete: "cascade" }),
     is_active: boolean("is_active").default(true).notNull(),

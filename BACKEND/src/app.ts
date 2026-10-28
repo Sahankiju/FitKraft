@@ -33,7 +33,7 @@ app.get("/", (c) => {
   });
 });
 
-app.route('/',productRoutes);
-app.route('/', categoryRoutes);
+app.route('/api/v1/',productRoutes);
+app.route('/api/v1/', categoryRoutes);
 
 export default app;
