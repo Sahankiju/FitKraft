@@ -6,8 +6,9 @@ import {z } from "zod";
 
 export const getAllProducts = async (c: Context) => {
     // Logic to fetch all products from the database
-    const featured = c.req.query("featured")
-    const products = await productServices.getAllProducts();
+    const featured = c.req.query("featured");
+    const limit = Number(c.req.query("limit")) || 10;
+    const products = await productServices.getAllProducts({ featured:featured==="true"?true:undefined, limit });
     return c.json(products);
 }
 
