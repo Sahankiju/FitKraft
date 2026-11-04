@@ -1,5 +1,6 @@
 
 import {Context} from "hono";
+import { validateProductImages } from "../utils/validateProductImages";
 import { productServices } from "../services/productServices";
 import { createProductSchema } from "../zodSchema/productSchema";
 import {z } from "zod";

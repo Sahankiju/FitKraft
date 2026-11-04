@@ -1,6 +1,6 @@
 
 import { Hono } from "hono";
-import { createProduct, getProducts } from "../controllers/productController";
+import { createProduct, getProducts, validateProductUpload } from "../controllers/productController";
 
 const productRoutes = new Hono();
 
