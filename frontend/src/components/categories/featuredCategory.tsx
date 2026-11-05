@@ -24,7 +24,7 @@ export function FeaturedCategories() {
           <Card.Section>
             <Image src={category.image} h={{ base: 100, md: 180 }}  />
           </Card.Section>
-          <Text fw={{ base: 250, md: 400 }} fz={{ base: "xs", md: "md" }} ta="center" mt="xs">
+          <Text fw={{ base: 250, md: 500 }} fz={{ base: "xs", md: "md" }} ta="center" mt="xs">
             {category.name}
           </Text>
         </Card>

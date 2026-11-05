@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+.primaryButton {
+    background-color: var(--brand);
+    color: var(--on-brand);
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.primaryButton:hover {
+    transform: translateY(-2px);
+    background-color: var(--brand);
+}

@@ -28,9 +28,9 @@ export function Navbar() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
 
   return (
-    <AppShell.Header bg="var(--bg)">
+    <AppShell.Header bg="var(--bg)" w="100%">
       <Stack gap={0} w="100%">
-        <Group w="100%" h={{ base: "35px", md: "50px" }} justify="space-between" align="center" px="5vw" py="0" >
+        <Group h={{ base: "35px", md: "60px" }} justify="space-between" align="center" mx="auto" w="85vw" py="0" >
           <Text fw={{ base: 600, md: 700 }} fz={{ base: "20px", md: "30px" }} lh={{ base: 1, md: 1.2 }}>
             FitKraft
           </Text>
@@ -55,7 +55,7 @@ export function Navbar() {
           />
         </Group>
         <Divider />
-        <Breadcrumbs separator="/" separatorMargin="5px" h={{ base: "15px", md: "20px" }} px="5vw">
+        <Breadcrumbs separator="/" separatorMargin="5px" h={{ base: "15px", md: "20px" }} mx="auto" w="85vw">
           {items}
         </Breadcrumbs>
       </Stack>

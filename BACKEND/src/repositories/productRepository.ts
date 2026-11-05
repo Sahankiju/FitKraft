@@ -25,9 +25,12 @@ export const productRepository = {
 },
 
   createProduct: async (productData: CreateProduct) => {
-    // Logic to create a new product in the database
-    const result = await db.insert(product).values(productData);
-    return result;
-  },
+  const [newProduct] = await db
+    .insert(product)
+    .values(productData)
+    .returning();
+
+  return newProduct;
+},
 };
 
