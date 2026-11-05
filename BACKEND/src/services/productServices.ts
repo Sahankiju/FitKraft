@@ -71,8 +71,11 @@ export const productServices = {
             if (uploadedImages.length > 0) {
                 await productRepository.createProductImages(
                     newProduct.id,
-                    uploadedImages
+                    uploadedImages,
                 );
+                if (uploadedImages[0]) {
+                    await productRepository.updateProduct(newProduct.id, { thumbnail: uploadedImages[0].image_url });
+                }
             }
 
             return {

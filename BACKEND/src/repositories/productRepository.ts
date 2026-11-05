@@ -52,6 +52,17 @@ export const productRepository = {
             )
             .returning();
     },
+    updateProduct: async (
+    productId: string,
+    productData: Partial<CreateProduct>
+) => {
+    const [result] = await db
+        .update(product)
+        .set(productData)
+        .where(eq(product.id, productId));
+
+    return result;
+},
 
     deleteProduct: async (productId: string) => {
         return db
