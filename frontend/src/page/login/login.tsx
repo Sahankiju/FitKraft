@@ -58,7 +58,6 @@ export default function SignIn() {
               <Title order={2} ta="center">
                 Welcome Back
               </Title>
-
               <Text size="sm" c="dimmed" ta="center">
                 Sign in to your FitKraft account.
               </Text>

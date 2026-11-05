@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "better-auth": "^1.6.27",
+    "cloudinary": "^2.11.0",
     "drizzle-orm": "0.44.7",
     "hono": "^4.13.1",
     "pg": "^8.23.0",

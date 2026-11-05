@@ -4,106 +4,94 @@ import {
   Group,
   Badge,
   Text,
-  Divider,
   Box,
-  Button,
   Anchor,
-  // Card,
-  // Image,
 } from "@mantine/core";
-import image from "../../assets/Image/landingPage.avif";
-import { FeaturedCategories } from "../../components/categories/featuredCategory";  
-
+import { useMediaQuery } from "@mantine/hooks";
+import { FeaturedCategories } from "../../components/categories/featuredCategory";
+import HowItWorks from "../../components/site/howItWorks";
+import AboutUs from "../about/aboutUs";
+import HeroSection from "../../components/site/heroSection";
+// import classes from "./homePage.module.css";
 
 export default function HomePage() {
+  const isMd = useMediaQuery("(min-width: 768px)");
   return (
-    <ScrollArea h="calc(100vh - 70px)" mt="70px" w="100vw">
-      <Box className="w-full">
-        <Box className="px-1 md:px-5 w-full  bg-gray-100">
-          <Stack gap={0}>
-            <section className="w-full md:h-150 ">
-              <Group align="center" justify="space-between" wrap="wrap" className="w-full h-full" >
-                <Stack gap="xl" className=" md:w-120">
-                  <Badge color="blue"> *  Now available in Nepal</Badge>
+    <ScrollArea
+      h={{ base: "calc(100vh - 50px)", md: "calc(100vh - 70px)" }}
+      mt={{ base: "50px", md: "70px" }}
+      w="100%"
+      >
+      <Box w="85vw" mx="auto" h="100%">
+        <Box w="100%">
+          <Stack gap={0} w="100%">
 
-                  <Text fw={800} size="60px" className="font-(--sans)">
-                    Design Your Perfect Outfit.
-                  </Text>
+            {/* Hero Section */}
+            <HeroSection />
 
-                  <Text c="dimmed">
-                    Custom tailoring, redefined for the digital age. Choose your
-                    design, set your measurements, and receive a garment made
-                    precisely for you.
-                  </Text>
-
-                  <Button size="md" className="mt-2 w-fit">
-                    Browse Designs
-                  </Button>
-                </Stack>
-                <img src={image} alt="landing page" className="w-1/2 h-full" />
-              </Group>
-            </section>
-            <Divider />
             {/* Featured Categories Section */}
-            <section className="pt-10">
-              <Stack gap={10}>
-                <Text c="dimmed" size="sm">
+            <Box component="section" pt={ isMd ? "40px" : "25px"} w="100%">
+              <Stack gap={isMd ? 10 : 0}  w="100%">
+                <Text c="dimmed" size={isMd ? "md" : "10px"}>
                   Browse By
                 </Text>
+
                 <Group justify="space-between" align="center">
-                  <Text fw={700} size="30px">
+                <Text fw={{ base: 600, md: 700 }} fz={{ base: "20px", md: "30px" }}>
                     Featured Categories
                   </Text>
-                  <Anchor href="" underline="always">
+
+                  <Anchor href="" underline="always" size={isMd ? "md" : "10px"}>
                     View All
                   </Anchor>
                 </Group>
+
                 <FeaturedCategories />
               </Stack>
-            </section>
+            </Box>
 
-            <Divider />
 
             {/* Featured Products Section */}
-            <section className="pt-10">
-              <Stack gap={40}>
+            <Box component="section"  pt={ isMd ? "40px" : "25px"}>
+              <Stack gap={isMd ? 10 : 0}  w="100%">
                 <Group justify="space-between" align="center">
-                  <Text fw={700} size="30px">
+                  <Text fw={{ base: 600, md: 700 }} fz={{ base: "20px", md: "30px" }}>
                     Featured Products
                   </Text>
-                  <Badge size="sm" variant="gradient"  gradient={{ from: 'blue', to: 'cyan', deg: 90 }} >
-                      Best Seller
+
+                  <Badge
+                    size={isMd ? "sm" : "xs"}
+                    variant="gradient"
+                    ta="center"
+                    gradient={ 
+                      { from: "blue", to: "cyan", deg: 90 }
+                    }
+                  >
+                    Best Seller
                   </Badge>
                 </Group>
               </Stack>
-            </section>
-
-            <Divider />
+            </Box>
 
             {/* How It Works Section */}
-            <section className="pt-10">
-              <Text fw={700} size="30px">
-                How It Works
-              </Text>
-            </section>
+            <Box component="section" pt={ isMd ? "40px" : "25px"} w="100%">
+              <HowItWorks />
+            </Box>
 
-            <Divider />
 
             {/* About Us Section */}
-            <section className="pt-10">
-              <Text fw={700} size="30px">
-                About Us
-              </Text>
-            </section>
+            <Box component="section" pt="40px">
+              <AboutUs />
+            </Box>
 
-            <Divider />
 
             {/* Contact Section */}
-            <section className="pt-10 pb-16">
+            <Box component="section" pt="40px" pb="64px">
               <Text fw={700} size="30px">
                 Contact Us
               </Text>
-            </section>
+            </Box>
+
           </Stack>
         </Box>
       </Box>
