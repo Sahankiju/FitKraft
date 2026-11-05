@@ -1,16 +1,21 @@
-import { pgTable, uuid, text, integer, boolean } from "drizzle-orm/pg-core";
+import { pgTable } from "drizzle-orm/pg-core/table";
+import { uuid, varchar, integer } from "drizzle-orm/pg-core";
 import { product } from "./product_schema";
 
-export const product_images = pgTable("product_images", {
-  id: uuid("id").primaryKey().defaultRandom(),
 
-  product_id: uuid("product_id")
-    .notNull()
-    .references(() => product.id, { onDelete: "cascade" }),
+export const product_images = pgTable(
+    "product_images",
+    {
+        id: uuid("id").primaryKey().defaultRandom(),
 
-  image_url: text("image_url").notNull(),
-  public_id: text("public_id").notNull(),
+        product_id: uuid("product_id")
+            .notNull()
+            .references(() => product.id, { onDelete: "cascade" }),
 
-  display_order: integer("display_order").notNull().default(0),
-  is_primary: boolean("is_primary").notNull().default(false),
-});
+        image_url: varchar("image_url", { length: 512 }).notNull(),
+
+        public_id: varchar("public_id", { length: 255 }).notNull().unique(),
+
+        display_order: integer("display_order").notNull().default(0),
+    }
+);

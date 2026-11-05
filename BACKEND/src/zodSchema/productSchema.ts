@@ -11,7 +11,7 @@ export const createProductSchema = z.object({
     .max(256, "Description must be at most 256 characters")
     .optional(),
 
-  price: z
+  price: z.coerce
     .number()
     .int("Price must be an integer")
     .positive("Price must be greater than 0"),

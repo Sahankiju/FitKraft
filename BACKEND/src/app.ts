@@ -6,7 +6,7 @@ import productRoutes from './routes/productRoutes';
 import categoryRoutes from './routes/categoryRoutes';
 import { adminOnly } from './middlewares/admin';
 import { auth } from './utils/auth';
-import uploadCloudinaryRoutes from './routes/uploadCloudinary_routes';
+
 
 const app = new Hono();
 
@@ -34,6 +34,6 @@ app.get("/", (c) => {
 // API routes
 app.route('/api/v1', productRoutes);
 app.route('/api/v1', categoryRoutes);
-app.route('/api/v1', uploadCloudinaryRoutes);
+
 
 export default app;

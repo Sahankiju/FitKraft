@@ -1,5 +1,5 @@
 {
-  "id": "b3d8bdd9-2e32-4c72-ab08-17e8e4667a00",
+  "id": "d1f8b950-641d-4502-9bd4-e23421bef20f",
   "prevId": "7f4a3e0c-ff61-43b1-8879-64cad196a5c0",
   "version": "7",
   "dialect": "postgresql",
@@ -493,13 +493,13 @@
         },
         "image_url": {
           "name": "image_url",
-          "type": "text",
+          "type": "varchar(512)",
           "primaryKey": false,
           "notNull": true
         },
         "public_id": {
           "name": "public_id",
-          "type": "text",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
@@ -509,13 +509,6 @@
           "primaryKey": false,
           "notNull": true,
           "default": 0
-        },
-        "is_primary": {
-          "name": "is_primary",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
         }
       },
       "indexes": {},
@@ -535,7 +528,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "product_images_public_id_unique": {
+          "name": "product_images_public_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "public_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -571,7 +572,7 @@
         },
         "thumbnail": {
           "name": "thumbnail",
-          "type": "text",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false
         },
