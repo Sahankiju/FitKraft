@@ -1,6 +1,6 @@
 
 import {Context} from "hono";
-import { validateProductImages } from "../utils/validateProductImages";
+//import { validateProductImages } from "../utils/validateProductImages";
 import { productServices } from "../services/productServices";
 import { createProductSchema } from "../zodSchema/productSchema";
 import {z } from "zod";
@@ -14,16 +14,37 @@ export const getProducts = async (c: Context) => {
 }
 
 export const createProduct = async (c: Context) => {
-    // Logic to create a new product in the database
-    const body = await c.req.json();
-    console.log("BODY:", body);
-    const result = createProductSchema.safeParse(body);
+    const body = await c.req.parseBody({ all: true });
+
+    // Extract images
+    const files = body.images;
+
+    const images = Array.isArray(files)
+        ? files.filter((file): file is File => file instanceof File)
+        : files instanceof File
+            ? [files]
+            : [];
+
+    // Remove images from product data
+    const {
+        images: _ignored,
+        ...productData
+    } = body;
+
+    // Validate product data
+    const result = createProductSchema.safeParse(productData);
+
     if (!result.success) {
-        return c.json({ 
+        return c.json({
             message: "validation failed",
-            error: z.treeifyError(result.error) }, 400);
+            error: z.treeifyError(result.error)
+        }, 400);
     }
-    const productData = result.data;
-    const newProduct = await productServices.createProduct(productData);
-    return c.json(newProduct);
-}
+
+    const newProduct = await productServices.createProduct(
+        result.data,
+        images
+    );
+
+    return c.json(newProduct, 201);
+};

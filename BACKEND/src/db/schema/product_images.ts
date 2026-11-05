@@ -4,12 +4,18 @@ import { product } from "./product_schema";
 
 
 export const product_images = pgTable(
-  "product_images",
-  {
-    id: uuid("id").primaryKey().defaultRandom(),
-    product_id: uuid("product_id").notNull()
-    .references(() => product.id, { onDelete: "cascade" }),
-    image_url: varchar("image_url", { length: 256 }).notNull(),
-    display_order: integer("display_order").notNull().default(0)
-  }
+    "product_images",
+    {
+        id: uuid("id").primaryKey().defaultRandom(),
+
+        product_id: uuid("product_id")
+            .notNull()
+            .references(() => product.id, { onDelete: "cascade" }),
+
+        image_url: varchar("image_url", { length: 512 }).notNull(),
+
+        public_id: varchar("public_id", { length: 255 }).notNull().unique(),
+
+        display_order: integer("display_order").notNull().default(0),
+    }
 );
