@@ -23,7 +23,7 @@ export default function BestSeller() {
 
     return (
         <div>
-            <SimpleGrid cols={4}>
+            <SimpleGrid cols={3} spacing="md" mt={{ base: 10, md: 20 }}>
                 {bestSellers.map((product) => (
                     <Card key={product.id}>
                         <Card.Section>

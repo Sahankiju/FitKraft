@@ -3,8 +3,9 @@ import { AppShell, Stack, Group, Text, Breadcrumbs, Burger,Anchor,
   Divider,
   Drawer,
   ScrollArea,} from "@mantine/core";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useDisclosure } from '@mantine/hooks';
+import classes from "./Navbar.module.css"
 
 export function Navbar() {
   const location = useLocation();
@@ -30,17 +31,28 @@ export function Navbar() {
   return (
     <AppShell.Header bg="var(--bg)" w="100%">
       <Stack gap={0} w="100%">
-        <Group h={{ base: "35px", md: "60px" }} justify="space-between" align="center" mx="auto" w="85vw" py="0" >
-          <Text fw={{ base: 600, md: 700 }} fz={{ base: "20px", md: "30px" }} lh={{ base: 1, md: 1.2 }}>
-            FitKraft
-          </Text>
+        <Group h={{ base: "35px", md: "60px" }} justify="space-between" align="center" mx="auto" w="85%" py="0" >
+            <Anchor
+              component={Link}
+              to="/home"
+              underline="never"
+              c="inherit"
+            >
+              <Text
+                fw={{ base: 600, md: 700 }}
+                fz={{ base: "20px", md: "30px" }}
+                lh={{ base: 1, md: 1.2 }}
+              >
+                FitKraft
+              </Text>
+            </Anchor>
 
           <Group gap="xl" visibleFrom="sm">
-            <Anchor href="#" c="var(--muted)" underline="never" fz={16} fw={500}>Home</Anchor>
-            <Anchor href="#" c="var(--muted)" underline="never" fz={16}>Categories</Anchor>
-            <Anchor href="#" c="var(--muted)" underline="never" fz={16}>How it Works</Anchor>
-            <Anchor href="#" c="var(--muted)" underline="never" fz={16}>About</Anchor>
-            <Anchor href="#" c="var(--muted)" underline="never" fz={16}>Contact</Anchor>
+            <Anchor className={classes.hover} component={Link} to="/home" >Home</Anchor>
+            <Anchor className={classes.hover} component={Link} to="/home" >Categories</Anchor>
+            <Anchor className={classes.hover} href="#howitworks" >How it Works</Anchor>
+            <Anchor className={classes.hover} component={Link} to="/home" >About</Anchor>
+            <Anchor className={classes.hover} component={Link} to="/home" >Contact</Anchor>
           </Group>
 
           <Group visibleFrom="sm">
@@ -55,7 +67,7 @@ export function Navbar() {
           />
         </Group>
         <Divider />
-        <Breadcrumbs separator="/" separatorMargin="5px" h={{ base: "15px", md: "20px" }} mx="auto" w="85vw">
+        <Breadcrumbs separator="/" separatorMargin="5px" h={{ base: "15px", md: "20px" }} mx="auto" w="85%">
           {items}
         </Breadcrumbs>
       </Stack>
@@ -70,11 +82,11 @@ export function Navbar() {
       >
         <ScrollArea h="calc(100vh - 80px)" mx="-md" px="md">
           <Divider my="sm" />
-            <Anchor href="#" underline="never" c="var(--muted)" fw={500} display="block">Home</Anchor>
-            <Anchor href="#" underline="never" c="var(--muted)" display="block">Categories</Anchor>
-            <Anchor href="#" underline="never" c="var(--muted)" display="block">How it Works</Anchor>
-            <Anchor href="#" underline="never" c="var(--muted)" display="block">About</Anchor>
-            <Anchor href="#" underline="never" c="var(--muted)" display="block">Contact</Anchor>
+            <Anchor className={classes.hover} component={Link} to="/home" display="block">Home</Anchor>
+            <Anchor className={classes.hover} component={Link} to="/home" display="block">Categories</Anchor>
+            <Anchor className={classes.hover} component={Link} to="/home" display="block">How it Works</Anchor>
+            <Anchor className={classes.hover} component={Link} to="/home" display="block">About</Anchor>
+            <Anchor className={classes.hover} component={Link} to="/home" display="block">Contact</Anchor>
           <Divider my="sm" />
 
           <Group justify="center" grow pb="xl" px="md">

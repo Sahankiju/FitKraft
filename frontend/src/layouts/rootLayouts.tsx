@@ -6,7 +6,7 @@ export default function RootLayout() {
   return (
     <AppShell header={{ height: { base: 50, md: 80 } }} padding={0}>
       <Navbar />
-      <AppShell.Main p={0} m={0}>
+      <AppShell.Main p={0} m={0} h="100%" w="100%">
         <Outlet />
       </AppShell.Main>
     </AppShell>

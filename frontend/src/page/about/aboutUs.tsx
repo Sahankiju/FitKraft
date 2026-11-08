@@ -4,7 +4,7 @@ import classes from './aboutUs.module.css';
 export default function AboutUs() {
   return (
     <Stack>
-        <Stack gap={5} mb="md">
+        <Stack gap={5} mb={{ base: 10, md: 20 }}>
             <Text fw={300} size="15px" c="dimmed">
                 Customer Stories
             </Text>
