@@ -7,6 +7,8 @@ import {
   Image,
   Flex,
   Center,
+  Group,
+  Divider
 } from "@mantine/core";
 import image from "../../assets/Image/landingPage.avif";
 import classes from "./heroSection.module.css";
@@ -18,7 +20,7 @@ export default function HeroSection() {
     
 return (
     <Box component="section" w="100%" 
-              h={{ base: "auto", md: "600px" }} 
+              h={{ base: "auto", md: "555px" }} 
               mt={{ base: "30px", md: "60px" }} 
               >
               <Center w="100%" h="100%">
@@ -33,8 +35,8 @@ return (
                   gap={0}
                 >
                   <Stack
-                    gap={isMd ? "xl" : "sm"}
-                    mt={{ base: "20px", md: "60px" }}
+                    gap={isMd ? "lg" : "sm"}
+                    mt={{ base: "20px", md: "40px" }}
                     w={{ base: "100%", md: "40%" }}
                     align="flex-start"
                   >
@@ -70,14 +72,19 @@ return (
                     </Text>
 
                     <Button
-
                       size={isMd ? "md" : "xs"}
                       mt={{ base: "xs", md: "sm" }}
                       w="fit-content"
                       className={classes.primaryButton}
                     >
-                      Browse Designs
+                    Browse Designs
                     </Button>
+                    <Divider w="100%"/>
+                    <Group w="100%" gap="xl">
+                      <Box><Text fz="25px" fw={1000}>2,400+</Text> <Text>Designs</Text></Box>
+                      <Box><Text fz="25px" fw={1000}>98%</Text><Text>Satisfaction</Text></Box>
+                      <Box><Text fz="25px" fw={1000}>15 days</Text><Text>Avg. delivery</Text></Box>
+                    </Group>
                   </Stack>
 
                   <Image
