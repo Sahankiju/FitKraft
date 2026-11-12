@@ -5,6 +5,7 @@ import SignIn from "../page/login/login";
 import Register from "../page/register/register";
 import VerifyEmail from "../page/verifications/verifyEmail";
 import NotFound from "../page/NotFound/notFound";
+import ProductPage from "../page/product/productPage";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,17 @@ export const router = createBrowserRouter([
         index: true,
         element: <HomePage />,
       },
+    ],
+  
+  },
+  {
+    path: "/product",
+    element:<RootLayout/>,
+    children: [
+      {
+        index: true,
+        element: <ProductPage/>,
+      }
     ],
   },
 

@@ -49,7 +49,7 @@ export function Navbar() {
 
           <Group gap="xl" visibleFrom="sm">
             <Anchor className={classes.hover} component={Link} to="/home" >Home</Anchor>
-            <Anchor className={classes.hover} component={Link} to="/home" >Categories</Anchor>
+            <Anchor className={classes.hover} component={Link} to="/product" >Product</Anchor>
             <Anchor className={classes.hover} href="#howitworks" >How it Works</Anchor>
             <Anchor className={classes.hover} component={Link} to="/home" >About</Anchor>
             <Anchor className={classes.hover} component={Link} to="/home" >Contact</Anchor>
