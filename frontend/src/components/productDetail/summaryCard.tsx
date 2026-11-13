@@ -49,26 +49,26 @@ export default function SummaryCard({
     }));
 
     return (
-        <Card withBorder radius="md" padding="lg">
-            <Stack gap="lg">
+        <Card withBorder radius="md" padding="md">
+            <Stack gap="sm">
                 {/* Total and delivery estimate */}
-                <Group justify="space-between" align="flex-start">
-                    <Stack gap={4}>
-                        <Text size="sm" c="dimmed">
+                <Group justify="space-between" align="center">
+                    <Stack gap={2}>
+                        <Text size="xs" c="dimmed">
                             Total
                         </Text>
 
-                        <Title order={3}>
+                        <Title order={4}>
                             {npr(total)}
                         </Title>
                     </Stack>
 
-                    <Stack gap={4} align="flex-end">
-                        <Text size="sm" c="dimmed">
+                    <Stack gap={2} align="flex-end">
+                        <Text size="xs" c="dimmed">
                             Ready in about
                         </Text>
 
-                        <Text fw={600}>
+                        <Text size="sm" fw={600}>
                             {readyInDays} days
                         </Text>
                     </Stack>
@@ -77,24 +77,24 @@ export default function SummaryCard({
                 <Divider />
 
                 {/* Price breakdown */}
-                <Stack gap="sm">
+                <Stack gap="xs">
                     <Group justify="space-between">
-                        <Text size="sm" c="dimmed">
+                        <Text size="xs" c="dimmed">
                             Base price
                         </Text>
 
-                        <Text size="sm" fw={500}>
+                        <Text size="xs" fw={500}>
                             {npr(basePrice)}
                         </Text>
                     </Group>
 
                     {extras.map((line) => (
                         <Group key={line.label} justify="space-between">
-                            <Text size="sm" c="dimmed">
+                            <Text size="xs" c="dimmed">
                                 {line.label}
                             </Text>
 
-                            <Text size="sm" fw={500}>
+                            <Text size="xs" fw={500}>
                                 + {npr(line.amount)}
                             </Text>
                         </Group>
@@ -105,6 +105,7 @@ export default function SummaryCard({
 
                 {/* Measurement profile */}
                 <Select
+                    size="sm"
                     label="Measuring for"
                     data={options}
                     value={profileId}
@@ -117,7 +118,7 @@ export default function SummaryCard({
                 {/* Add to cart */}
                 <Button
                     fullWidth
-                    size="lg"
+                    size="md"
                     onClick={onAdd}
                 >
                     Add to cart

@@ -1,0 +1,32 @@
+.productLayout {
+    display: flex;
+}
+
+/* Stays in view while the products scroll. Scrolls by itself if it is tall. */
+.filterSection {
+    flex: 2;
+    min-width: 0;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+    max-height: calc(100% - 100px);
+    overflow-y: auto;
+    overscroll-behavior: contain; /* scrolling the filter never moves the page */
+}
+
+.productSection {
+    flex: 8;
+    min-width: 0;
+}
+
+@media (max-width: 768px) {
+    .productLayout {
+        flex-direction: column;
+    }
+
+    .filterSection {
+        position: static;
+        max-height: none;
+        overflow: visible;
+    }
+}

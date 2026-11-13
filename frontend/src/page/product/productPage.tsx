@@ -10,18 +10,20 @@ import {
     Center,
     Loader,
     Flex,
-    Box,
     ScrollArea,
 } from "@mantine/core";
 
 import type { Product } from "../../types/product";
+
 import ProductCard from "../../components/product/productCard";
 import ProductFilter from "../../components/product/productFilter";
 import ProductSort, {
     sortProducts,
     type SortOption,
 } from "../../components/product/productSort";
+import classes from "./productPage.module.css";
 
+// Available categories
 const categories = [
     { id: "1", name: "Shirts" },
     { id: "2", name: "Pants" },
@@ -32,18 +34,18 @@ const categories = [
 ];
 
 export default function ProductPage() {
+    // Product data
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
 
+    // Filter states
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([]);
 
+    // Sorting state
     const [sortBy, setSortBy] = useState<SortOption | null>("featured");
 
-    const sortedProducts = useMemo(() => {
-        return sortProducts(products, sortBy);
-    }, [products, sortBy]);
-
+    // Fetch products from backend
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -62,41 +64,91 @@ export default function ProductPage() {
         fetchProducts();
     }, []);
 
-    return (
-        <ScrollArea w="100%" h="100%">
-            <Container size="xl" py="xl">
-                <Title order={1}>All designs</Title>
+    // Handle category selection
+    const handleCategoryChange = (id: string, checked: boolean) => {
+        setSelectedCategories((prev) => checked
+                ? [...prev, id]
+                : prev.filter((categoryId) => categoryId !== id)
+        );
+    };
 
-                <Text c="dimmed" mt={4} mb="xl">
-                    {products.length} products
-                </Text>
+    // Handle price selection
+    const handlePriceChange = (range: string, checked: boolean) => {
+        setSelectedPriceRanges((prev) => checked
+                ? [...prev, range]
+                : prev.filter((priceRange) => priceRange !== range)
+        );
+    };
 
-                <Flex gap="xl" align="flex-start">
-                    {/* Filters */}
-                    <Box w={260} style={{ flexShrink: 0 }}>
+    // Filter and sort products
+    const displayedProducts = useMemo(() => {
+        const filtered = products.filter((product) => {
+            // Category filtering
+            const matchesCategory =
+                selectedCategories.length === 0 ||
+                selectedCategories.includes(product.category_id);
+
+            // Price filtering
+            const matchesPrice =
+                selectedPriceRanges.length === 0 ||
+                selectedPriceRanges.some((range) => {
+                    switch (range) {
+                        case "under-3000":
+                            return product.price < 3000;
+
+                        case "3000-7000":
+                            return product.price >= 3000 && product.price < 7000;
+
+                        case "7000-15000":
+                            return product.price >= 7000 && product.price < 15000;
+
+                        case "15000-plus":
+                            return product.price >= 15000;
+
+                        default:
+                            return false;
+                    }
+                });
+
+            return matchesCategory && matchesPrice;
+        });
+
+        return sortProducts(filtered, sortBy);
+    }, [products, selectedCategories, selectedPriceRanges, sortBy]);
+
+     return (
+        <Container size="xl" py="xl">
+
+            {/* Page heading */}
+            <Title order={1}>All designs</Title>
+
+            <Text c="dimmed" mt={4} mb="xl">
+                {displayedProducts.length} products
+            </Text>
+
+            <Flex
+                gap="xl"
+                align="stretch"
+                className={classes.productLayout}
+            >
+                {/* Filter sidebar */}
+                <div className={classes.filterSection}>
+                    <ScrollArea h="100%" type="auto">
                         <ProductFilter
                             categories={categories}
                             selectedCategories={selectedCategories}
-                            onCategoryChange={(id, checked) => {
-                                setSelectedCategories((prev) =>
-                                    checked
-                                        ? [...prev, id]
-                                        : prev.filter((item) => item !== id)
-                                );
-                            }}
+                            onCategoryChange={handleCategoryChange}
                             selectedPriceRanges={selectedPriceRanges}
-                            onPriceChange={(range, checked) => {
-                                setSelectedPriceRanges((prev) =>
-                                    checked
-                                        ? [...prev, range]
-                                        : prev.filter((item) => item !== range)
-                                );
-                            }}
+                            onPriceChange={handlePriceChange}
                         />
-                    </Box>
+                    </ScrollArea>
+                </div>
 
-                    {/* Products */}
-                    <Box flex={1}>
+                {/* Product section */}
+                <div className={classes.productSection}>
+                    <ScrollArea h="100%" type="auto">
+
+                        {/* Sorting */}
                         <Flex justify="flex-end" mb="lg">
                             <ProductSort
                                 value={sortBy ?? "featured"}
@@ -104,20 +156,23 @@ export default function ProductPage() {
                             />
                         </Flex>
 
+                        {/* Loading / Empty / Products */}
                         {loading ? (
                             <Center py="xl">
                                 <Loader />
                             </Center>
-                        ) : sortedProducts.length === 0 ? (
+                        ) : displayedProducts.length === 0 ? (
                             <Center py="xl">
-                                <Text>No products found.</Text>
+                                <Text c="dimmed">
+                                    No products found.
+                                </Text>
                             </Center>
                         ) : (
                             <SimpleGrid
                                 cols={{ base: 1, sm: 2, md: 3 }}
                                 spacing="lg"
                             >
-                                {sortedProducts.map((product) => (
+                                {displayedProducts.map((product) => (
                                     <ProductCard
                                         key={product.id}
                                         product={product}
@@ -125,9 +180,10 @@ export default function ProductPage() {
                                 ))}
                             </SimpleGrid>
                         )}
-                    </Box>
-                </Flex>
-            </Container>
-        </ScrollArea>
+
+                    </ScrollArea>
+                </div>
+            </Flex>
+        </Container>
     );
 }

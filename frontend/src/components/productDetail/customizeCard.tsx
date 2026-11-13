@@ -66,9 +66,7 @@ export default function CustomizeCard({
 
                                             {option.priceModifier > 0 && (
                                                 <Text size="xs">
-                                                    {formatExtra(
-                                                        option.priceModifier
-                                                    )}
+                                                    {formatExtra(option.priceModifier)}
                                                 </Text>
                                             )}
                                         </Stack>

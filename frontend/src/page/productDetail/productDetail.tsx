@@ -1,6 +1,5 @@
 
 import {
-    ScrollArea,
     Container,
     Stack,
     Group,
@@ -10,6 +9,7 @@ import {
     Loader,
     Center,
     Anchor,
+    ScrollArea
 } from "@mantine/core";
 
 import axios from "axios";
@@ -58,7 +58,9 @@ export default function ProductDetailPage() {
         return (
             <Center mih="60vh">
                 <Stack align="center" gap="sm">
-                    <Title order={3}>We couldn't find this design.</Title>
+                    <Title order={3}>
+                        We couldn't find this design.
+                    </Title>
 
                     <Anchor component={Link} to="/product">
                         Back to all designs
@@ -129,27 +131,39 @@ function Detail({ product }: { product: Product }) {
     };
 
     return (
-        <Container size="xl" py="xl">
-            <Group align="flex-start" gap="xl" wrap="nowrap">
-                {/* Product image */}
-                <Gallery images={images} alt={product.name} />
+        <Container
+            size="xl"
+            h="calc(100dvh - 80px)"
+            py="md"
+            style={{ overflow: "hidden" }}
+        >
+            <Group
+                align="stretch"
+                gap="xl"
+                wrap="nowrap"
+                h="100%"
+            >
+                {/* Product image stays fixed */}
+                <Gallery
+                    images={images}
+                    alt={product.name}
+                />
 
-                {/* Product details and customization */}
+                {/* Product information scroll area */}
                 <ScrollArea
                     flex={1}
-                    mah="85vh"
+                    h="100%"
                     type="auto"
                     scrollbarSize={8}
                     offsetScrollbars="y"
                 >
-                    <Stack gap="lg" pr="sm">
-                        <Group gap="xs">
-                            {product.featured && (
-                                <Badge color="orange" variant="light">
-                                    Featured
-                                </Badge>
-                            )}
-                        </Group>
+                    <Stack gap="md" pr="sm">
+
+                        {product.featured && (
+                            <Badge color="orange" variant="light" w="fit-content">
+                                Featured
+                            </Badge>
+                        )}
 
                         <Title order={1}>
                             {product.name}
@@ -165,6 +179,7 @@ function Detail({ product }: { product: Product }) {
                             </Text>
                         </Stack>
 
+                        {/* Inner customization scroll area */}
                         <CustomizeCard
                             groups={GROUPS}
                             selected={selected}
@@ -188,9 +203,12 @@ function Detail({ product }: { product: Product }) {
                             onProfile={setProfileId}
                             onAdd={handleAddToCart}
                         />
+
                     </Stack>
                 </ScrollArea>
             </Group>
         </Container>
+
+
     );
 }
