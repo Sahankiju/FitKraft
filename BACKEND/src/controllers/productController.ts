@@ -13,6 +13,26 @@ export const getProducts = async (c: Context) => {
     return c.json(products);
 }
 
+export const getProductById = async (c: Context) => {
+    const id = c.req.param("id");
+
+    if (!id) {
+        return c.json({
+            message: "Product ID is required",
+        }, 400);
+    }
+
+    const product = await productServices.getProductById(id);
+
+    if (!product) {
+        return c.json({
+            message: "Product not found",
+        }, 404);
+    }
+
+    return c.json(product, 200);
+};
+
 export const createProduct = async (c: Context) => {
     const body = await c.req.parseBody({ all: true });
 

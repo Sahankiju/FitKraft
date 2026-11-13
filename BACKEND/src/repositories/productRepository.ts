@@ -23,6 +23,28 @@ export const productRepository = {
             .limit(options.limit);
     },
 
+    getProductById: async (productId: string) => {
+        const [result] = await db
+            .select()
+            .from(product)
+            .where(eq(product.id, productId))
+            .limit(1);
+
+        if (!result) {
+            return null;
+        }
+
+        const images = await db
+            .select()
+            .from(product_images)
+            .where(eq(product_images.product_id, productId));
+
+        return {
+            ...result,
+            images,
+        };
+    },
+
     createProduct: async (productData: CreateProduct) => {
         const [result] = await db
             .insert(product)

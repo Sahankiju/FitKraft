@@ -6,6 +6,7 @@ import Register from "../page/register/register";
 import VerifyEmail from "../page/verifications/verifyEmail";
 import NotFound from "../page/NotFound/notFound";
 import ProductPage from "../page/product/productPage";
+import ProductDetailPage from "../page/productDetail/productDetail";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <ProductPage/>,
+      },
+      {
+        path: ":id",
+        element: <ProductDetailPage/>
       }
     ],
   },
