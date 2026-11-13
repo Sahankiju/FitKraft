@@ -1,11 +1,12 @@
 
 import { Hono } from "hono";
-import { createProduct, getProducts, /*validateProductUpload*/ } from "../controllers/productController";
+import { createProduct, getProducts, getProductById /*validateProductUpload*/ } from "../controllers/productController";
 
 const productRoutes = new Hono();
 
 productRoutes.get("/products", getProducts);
 productRoutes.post("/products", createProduct);
+productRoutes.get("/products/:id", getProductById);
 productRoutes.get("/products")
 
 
