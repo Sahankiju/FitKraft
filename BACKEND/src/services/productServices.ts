@@ -8,6 +8,12 @@ export const productServices = {
         return products;
     },
 
+    getProductById: async (productId: string) => {
+        const product = await productRepository.getProductById(productId);
+
+        return product;
+    },
+
     createProduct: async (productData: CreateProduct, images: File[]) => {
         // Create product first to get its ID
         const newProduct = await productRepository.createProduct(productData);
