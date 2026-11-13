@@ -6,6 +6,9 @@ import productRoutes from './routes/productRoutes';
 import categoryRoutes from './routes/categoryRoutes';
 import { adminOnly } from './middlewares/admin';
 import { auth } from './utils/auth';
+import customisationRoutes from "./routes/customisationRoutes";
+
+
 
 
 const app = new Hono();
@@ -34,6 +37,7 @@ app.get("/", (c) => {
 // API routes
 app.route('/api/v1', productRoutes);
 app.route('/api/v1', categoryRoutes);
+app.route("/api/v1", customisationRoutes);
 
 
 export default app;
