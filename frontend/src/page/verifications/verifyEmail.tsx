@@ -48,7 +48,7 @@ export default function VerifyEmail() {
       icon: <CheckIcon size={20} />,
     });
 
-    navigate("/");
+    navigate("/home");
   };
 
   return (

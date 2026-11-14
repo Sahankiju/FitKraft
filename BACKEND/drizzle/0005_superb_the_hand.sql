@@ -1,0 +1,1 @@
+ALTER TABLE "measurement_profiles" ADD COLUMN "notes" text;

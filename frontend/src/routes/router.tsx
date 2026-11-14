@@ -7,6 +7,7 @@ import VerifyEmail from "../page/verifications/verifyEmail";
 import NotFound from "../page/NotFound/notFound";
 import ProductPage from "../page/product/productPage";
 import ProductDetailPage from "../page/productDetail/productDetail";
+import MeasurementPage from "../page/measurement/measurementPage";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,17 @@ export const router = createBrowserRouter([
         element: <ProductDetailPage/>
       }
     ],
+  },
+  {
+    path: "/measurements",
+    element: <RootLayout />,
+    children: [
+      {
+        index: true,
+        element: <MeasurementPage />,
+      },
+    ],
+  
   },
 
   { path: "/login", element: <SignIn /> },

@@ -7,6 +7,7 @@ import categoryRoutes from './routes/categoryRoutes';
 import { adminOnly } from './middlewares/admin';
 import { auth } from './utils/auth';
 import customisationRoutes from "./routes/customisationRoutes";
+import measurementRoutes from "./routes/measurementRoutes";
 
 
 
@@ -38,6 +39,7 @@ app.get("/", (c) => {
 app.route('/api/v1', productRoutes);
 app.route('/api/v1', categoryRoutes);
 app.route("/api/v1", customisationRoutes);
+app.route("/api/v1", measurementRoutes);
 
 
 export default app;

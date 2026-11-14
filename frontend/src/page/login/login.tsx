@@ -40,7 +40,7 @@ export default function SignIn() {
       return;
     }
 
-    navigate("/");
+    navigate("/home");
   };
 
   return (
