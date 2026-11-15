@@ -322,3 +322,17 @@ export const getProductsUsingCustomisationGroup = async (
     .where(eq(product_customisation.group_id, groupId))
     .orderBy(asc(product_customisation.display_order));
 };
+
+/* -------------------------------------------------------------------------- */
+/* 15. GET CUSTOMISATION OPTIONS USING A CUSTOMISATION GROUP                               */
+/* -------------------------------------------------------------------------- */
+
+export const getCustomisationOptionsByGroupId = async (
+  groupId: string
+) => {
+  return await db
+    .select({})
+    .from(customisation_option)
+    .where(eq(customisation_option.group_id, groupId))
+    .orderBy(asc(customisation_option.name));
+};
