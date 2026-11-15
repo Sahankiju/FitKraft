@@ -28,10 +28,6 @@ import type {
 } from "../zodSchema/customisationSchema";
 
 
-/* -------------------------------------------------------------------------- */
-/* Shared helpers                                                             */
-/* -------------------------------------------------------------------------- */
-
 const PG_UNIQUE_VIOLATION = "23505";
 const PG_FOREIGN_KEY_VIOLATION = "23503";
 
