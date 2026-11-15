@@ -16,6 +16,7 @@ import {
   deleteCustomisationGroupController,
   updateProductCustomisationController,
   getProductsUsingCustomisationGroupController,
+  getCustomisationOptionsController,
 } from "../controllers/customisationController";
 
 const customisationRoutes = new Hono();
@@ -69,6 +70,12 @@ customisationRoutes.get(
 /* -------------------------------------------------------------------------- */
 /* CUSTOMISATION OPTIONS                                                      */
 /* -------------------------------------------------------------------------- */
+
+// GET all options for a customisation group
+customisationRoutes.get(
+  "/customisation-groups/:groupId/options",
+  getCustomisationOptionsController
+);
 
 // CREATE option inside a group
 customisationRoutes.post(

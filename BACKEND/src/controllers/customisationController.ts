@@ -17,6 +17,7 @@ import {
   getAllCustomisationGroups,
   updateProductCustomisation,
   getProductsUsingCustomisationGroupService,
+  getCustomisationOptions,
 } from "../services/customisationServices";
 
 import {
@@ -255,10 +256,41 @@ export const detachCustomisationGroupController = async (
   }
 };
 
+
+
 /* -------------------------------------------------------------------------- */
-/* 7. CREATE CUSTOMISATION OPTION                                             */
+/* 7. get  CUSTOMISATION OPTION                                             */
+/* GET /customisation-groups/:groupId/options                               */
+/* -------------------------------------------------------------------------- */
+
+export const getCustomisationOptionsController = async (c: Context) => {
+  try {
+    const groupId = getUuidParam(c, "groupId");
+
+    if (!groupId) {
+      return c.json({ message: "Invalid group ID" }, 400);
+    }
+
+    const result = await getCustomisationOptions(groupId);
+
+    return c.json(
+      {
+        message: "Customisation options retrieved successfully",
+        data: result,
+      },
+      200
+    );
+  } catch (error) {
+    return handleError(c, error);
+  }
+};
+
+/* -------------------------------------------------------------------------- */
+/* 8. CREATE CUSTOMISATION OPTION                                             */
 /* POST /customisation-groups/:groupId/options                               */
 /* -------------------------------------------------------------------------- */
+
+
 
 export const createCustomisationOptionController = async (
   c: Context
@@ -303,7 +335,7 @@ export const createCustomisationOptionController = async (
 };
 
 /* -------------------------------------------------------------------------- */
-/* 8. UPDATE CUSTOMISATION OPTION                                             */
+/* 9. UPDATE CUSTOMISATION OPTION                                             */
 /* PATCH /customisation-options/:optionId                                   */
 /* -------------------------------------------------------------------------- */
 
@@ -350,7 +382,7 @@ export const updateCustomisationOptionController = async (
 };
 
 /* -------------------------------------------------------------------------- */
-/* 9. DELETE CUSTOMISATION OPTION                                             */
+/* 10. DELETE CUSTOMISATION OPTION                                             */
 /* DELETE /customisation-options/:optionId                                  */
 /* -------------------------------------------------------------------------- */
 
@@ -379,7 +411,7 @@ export const deleteCustomisationOptionController = async (
 };
 
 /* -------------------------------------------------------------------------- */
-/* 10. UPDATE CUSTOMISATION GROUP RULES                                       */
+/* 11. UPDATE CUSTOMISATION GROUP RULES                                       */
 /* PATCH /customisation-groups/:groupId                                     */
 /* -------------------------------------------------------------------------- */
 
@@ -426,7 +458,7 @@ export const updateCustomisationGroupController = async (
 };
 
 /* -------------------------------------------------------------------------- */
-/* 11. GET PRODUCT CUSTOMISATIONS WITH OPTIONS                                */
+/* 12. GET PRODUCT CUSTOMISATIONS WITH OPTIONS                                */
 /* GET /products/:productId/customisations                                   */
 /* -------------------------------------------------------------------------- */
 
@@ -455,7 +487,7 @@ export const getProductCustomisationsController = async (
 };
 
 /* -------------------------------------------------------------------------- */
-/* 12. DELETE CUSTOMISATION GROUP                                             */
+/* 13. DELETE CUSTOMISATION GROUP                                             */
 /* DELETE /customisation-groups/:groupId                                    */
 /* -------------------------------------------------------------------------- */
 
@@ -484,7 +516,7 @@ export const deleteCustomisationGroupController = async (
 };
 
 /* -------------------------------------------------------------------------- */
-/* 13. UPDATE PRODUCT CUSTOMISATION                                          */
+/* 14. UPDATE PRODUCT CUSTOMISATION                                          */
 /* PATCH /products/:productId/customisations/:groupId                        */
 /* -------------------------------------------------------------------------- */
 
@@ -550,7 +582,7 @@ export const updateProductCustomisationController = async (
 };
 
 /* -------------------------------------------------------------------------- */
-/* 14. GET PRODUCTS USING A CUSTOMISATION GROUP                              */
+/* 15. GET PRODUCTS USING A CUSTOMISATION GROUP                              */
 /* GET /customisation-groups/:groupId/products                               */
 /* -------------------------------------------------------------------------- */
 
