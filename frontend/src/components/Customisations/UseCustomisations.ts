@@ -9,7 +9,7 @@ import {
   type Option,
   type OptionCreate,
   type OptionPatch,
-  type Product,
+  type Product, 
   type ProductGroup,
 } from "./Api";
 

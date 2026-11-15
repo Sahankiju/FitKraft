@@ -8,6 +8,7 @@ import NotFound from "../page/NotFound/notFound";
 import ProductPage from "../page/product/productPage";
 import ProductDetailPage from "../page/productDetail/productDetail";
 import MeasurementPage from "../page/measurement/measurementPage";
+import CustomisationsPage from "../page/Customisations/CustomisationsPage";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,18 @@ export const router = createBrowserRouter([
     ],
   
   },
+   {
+    path: "/Customisations",
+    element: <RootLayout />,
+    children: [
+      {
+        index: true,
+        element: <CustomisationsPage />,
+      },
+    ],
+  
+  },
+
 
   { path: "/login", element: <SignIn /> },
   { path: "/register", element: <Register /> },
