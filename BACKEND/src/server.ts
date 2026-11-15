@@ -17,6 +17,7 @@ async function start() {
 
     Bun.serve({
       port: PORT,
+      idleTimeout: 255, // 60 seconds
       fetch: app.fetch,
     });
 

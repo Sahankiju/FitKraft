@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { notifications } from "@mantine/notifications";
 import {
   api,
@@ -9,11 +9,38 @@ import {
   type Option,
   type OptionCreate,
   type OptionPatch,
-  type Product, 
+  type Product,
   type ProductGroup,
 } from "./Api";
 
-const errMsg = (e: unknown) => (e instanceof ApiError ? e.message : "Something went wrong. Try again.");
+const errMsg = (e: unknown) => {
+  console.error("[customisations]", e);
+  if (e instanceof ApiError) return e.message;
+  return e instanceof Error ? e.message : "Something went wrong. Try again.";
+};
+
+// Max simultaneous requests when loading per-group details.
+const CONCURRENCY = 4;
+
+// Runs fn over items with at most `limit` in flight at once, keeping result order.
+async function mapLimit<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+  const out = new Array<R>(items.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < items.length) {
+      const i = next++;
+      out[i] = await fn(items[i]);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return out;
+}
+
+// Status codes that mean "this endpoint isn't there" (0 = timed out / unreachable).
+const isMissingEndpoint = (e: unknown) =>
+  e instanceof ApiError && [0, 404, 405, 501].includes(e.status);
+
+type OptionsEndpoint = "unknown" | "yes" | "no";
 
 export function useCustomisations() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -26,47 +53,88 @@ export function useCustomisations() {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [hiddenListable, setHiddenListable] = useState(true);
 
+  // Bumped on every refresh so slow, outdated responses can't overwrite newer ones.
+  const refreshSeq = useRef(0);
+  // Remembers whether GET /customisation-groups/:id/options exists, so we probe it once, not per group.
+  const optionsEndpoint = useRef<OptionsEndpoint>("unknown");
+
   const refresh = useCallback(async (pid: string | null) => {
+    const seq = ++refreshSeq.current;
+
     const [gs, att] = await Promise.all([
       api.groups(),
       pid ? api.productGroups(pid) : Promise.resolve([] as ProductGroup[]),
     ]);
-    setGroups(gs);
-    setAttached(att);
+    if (seq !== refreshSeq.current) return; // a newer refresh started
 
-    let listable = true;
-    const details = await Promise.all(
-      gs.map(async (g) => {
-        const links = await api.groupProducts(g.id).catch(() => []);
-        let opts: Option[];
+    const fallbackOptions = (id: string) => att.find((a) => a.id === id)?.options ?? [];
+
+    // Loads the links (and, if allowed, all options incl. hidden) of one group.
+    const fetchDetail = async (g: Group, useOptions: boolean) => {
+      const productIds = await api
+        .groupProducts(g.id)
+        .then((links) => links.map((l) => l.product_id))
+        .catch(() => [] as string[]);
+
+      let opts = fallbackOptions(g.id);
+      let optionsError: unknown = null;
+      if (useOptions) {
         try {
           opts = await api.groupOptions(g.id);
-        } catch {
-          listable = false; // endpoint missing: fall back to active options only
-          opts = att.find((a) => a.id === g.id)?.options ?? [];
+        } catch (e) {
+          optionsError = e;
         }
-        return { id: g.id, productIds: links.map((l) => l.product_id), opts };
-      }),
-    );
+      }
+      return { id: g.id, productIds, opts, optionsError };
+    };
+
+    type Detail = Awaited<ReturnType<typeof fetchDetail>>;
+    const details: Detail[] = [];
+    let rest = gs;
+
+    // Probe the /options endpoint with ONE group first.
+    if (optionsEndpoint.current === "unknown" && gs.length > 0) {
+      const first = await fetchDetail(gs[0], true);
+      details.push(first);
+      rest = gs.slice(1);
+      if (!first.optionsError) optionsEndpoint.current = "yes";
+      else if (isMissingEndpoint(first.optionsError)) optionsEndpoint.current = "no";
+      // any other error (e.g. 500): don't cache, just fall back for this refresh
+    }
+
+    const useOptions = optionsEndpoint.current === "yes";
+    const others = await mapLimit(rest, CONCURRENCY, (g) => fetchDetail(g, useOptions));
+    details.push(...others);
+
+    if (seq !== refreshSeq.current) return;
+
+    // Commit everything together so the UI never renders half-loaded data.
+    setGroups(gs);
+    setAttached(att);
     setUsage(Object.fromEntries(details.map((d) => [d.id, d.productIds])));
     setOptions(Object.fromEntries(details.map((d) => [d.id, d.opts])));
-    setHiddenListable(listable);
+    setHiddenListable(details.every((d) => !d.optionsError) && optionsEndpoint.current !== "no");
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
     (async () => {
       try {
         const ps = await api.products();
+        if (cancelled) return;
         setProducts(ps);
         const first = ps[0]?.id ?? null;
         setProductId(first);
         await refresh(first);
       } catch (e) {
-        setLoadError(errMsg(e));
+        if (!cancelled) setLoadError(errMsg(e));
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     })();
+    return () => {
+      cancelled = true;
+    };
   }, [refresh]);
 
   const selectProduct = async (id: string) => {
