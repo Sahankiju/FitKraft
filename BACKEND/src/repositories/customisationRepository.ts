@@ -331,7 +331,7 @@ export const getCustomisationOptionsByGroupId = async (
   groupId: string
 ) => {
   return await db
-    .select({})
+    .select()
     .from(customisation_option)
     .where(eq(customisation_option.group_id, groupId))
     .orderBy(asc(customisation_option.name));
