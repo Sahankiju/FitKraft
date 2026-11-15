@@ -9,6 +9,7 @@ import ProductPage from "../page/product/productPage";
 import ProductDetailPage from "../page/productDetail/productDetail";
 import MeasurementPage from "../page/measurement/measurementPage";
 import CustomisationsPage from "../page/Customisations/CustomisationsPage";
+import AdminRoute from "./adminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -48,16 +49,20 @@ export const router = createBrowserRouter([
     ],
   
   },
-   {
-    path: "/Customisations",
-    element: <RootLayout />,
+  {
+    element: <AdminRoute />,
     children: [
       {
-        index: true,
-        element: <CustomisationsPage />,
+        path: "/admin/customisations",
+        element: <RootLayout />,
+        children: [
+          {
+            index: true,
+            element: <CustomisationsPage />,
+          },
+        ],
       },
     ],
-  
   },
 
 
