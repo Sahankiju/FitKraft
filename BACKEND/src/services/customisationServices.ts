@@ -13,6 +13,7 @@ import {
   getAllCustomisationGroups as getAllGroupsRepository,
   updateProductCustomisation as updateProductCustomisationRepository,
   getProductsUsingCustomisationGroup,
+  getCustomisationOptionsByGroupId,
 } from "../repositories/customisationRepository";
 
 import { applyGroupUpdate } from "../zodSchema/customisationSchema";
@@ -336,4 +337,16 @@ export const getProductsUsingCustomisationGroupService = async (
   if (!group) throw new Error("Customisation group not found");
 
   return await getProductsUsingCustomisationGroup(groupId);
+};
+
+/* -------------------------------------------------------------------------- */
+/* 15. GET CUSTOMISATION OPTIONS USING A CUSTOMISATION GROUP                               */
+/* -------------------------------------------------------------------------- */
+
+export const getCustomisationOptions = async (groupId: string) => {
+  const group = await getCustomisationGroupById(groupId);
+
+  if (!group) throw new Error("Customisation group not found");
+
+  return await getCustomisationOptionsByGroupId(groupId);
 };
