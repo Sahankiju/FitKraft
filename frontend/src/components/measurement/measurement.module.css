@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.profileItem {
+    display: block;
+    width: 100%;
+    text-align: left;
+    transition: background-color 150ms ease;
+}
+
+.profileItemActive {
+    background-color: var(--cream);
+}
+
+/* Active profile avatar */
+.profileItemActive :global(.mantine-Avatar-placeholder)  {
+    background-color: var(--brand);
+    color: var(--on-brand);
+}
+
+.pageLayout{
+    display:flex;
+}
+
+.sidebar{
+    flex: 2.5;
+}
+
+.content{
+    flex: 7.5;
+}
+

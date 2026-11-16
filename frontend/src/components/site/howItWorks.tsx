@@ -62,7 +62,7 @@ export default function HowItWorks() {
           ))}
         </Group>
 
-        <Button size={isMd ? "md" : "xs"} mt={{ base: "sm", md: "xl" }} w="fit-content" className={classes.primaryButton}>
+        <Button size={isMd ? "md" : "xs"} mt={{ base: "sm", md: "xl" }} w="fit-content" className="primaryButton">
           Start Your Order
         </Button>
       </Stack>

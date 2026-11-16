@@ -52,12 +52,15 @@ export default function CustomizeCard({
                                     <Button
                                         key={option.id}
                                         variant={isActive ? "filled" : "outline"}
-                                        color={isActive ? "dark" : "gray"}
+                                        color={isActive ? "var(--brand)" : "var(--muted)"}
                                         radius="xl"
                                         size="sm"
-                                        onClick={() =>
-                                            onSelect(group.id, option.id)
-                                        }
+                                        styles={{
+                                            root: {
+                                                backgroundColor: isActive ? undefined : "var(--bg)",
+                                            },
+                                        }}
+                                        onClick={() => onSelect(group.id, option.id)}
                                     >
                                         <Stack gap={0} align="center">
                                             <Text size="sm">
@@ -80,6 +83,9 @@ export default function CustomizeCard({
                 <Divider />
 
                 <Textarea
+                    classNames={{
+                        input:"inputField"
+                    }}
                     label="Special notes"
                     placeholder="Anything the tailor should know..."
                     value={notes}

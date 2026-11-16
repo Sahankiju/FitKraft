@@ -62,7 +62,10 @@ export default function VerifyEmail() {
               Enter the verification code sent to your email.
             </Text>
 
-            <PinInput
+            <PinInput 
+              classNames={{
+                input: "inputField",
+              }}
               length={6}
               type="number"
               value={otp}
@@ -71,7 +74,7 @@ export default function VerifyEmail() {
               gap="xs"
             />
 
-            <Button type="submit" fullWidth>
+            <Button type="submit" fullWidth className="primaryButton">
               Verify
             </Button>
             

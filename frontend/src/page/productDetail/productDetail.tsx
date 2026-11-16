@@ -1,4 +1,3 @@
-
 import {
     Container,
     Stack,
@@ -18,9 +17,10 @@ import { Link, useParams } from "react-router-dom";
 
 import CustomizeCard from "../../components/productDetail/customizeCard";
 import Gallery from "../../components/productDetail/gallery";
-import { GROUPS, PROFILES } from "../../components/productDetail/productData";
+import { GROUPS } from "../../components/productDetail/productData";
 import SummaryCard from "../../components/productDetail/summaryCard";
 import type { Product } from "../../types/product";
+import { CURRENT_PROFILE_KEY, type MeasurementProfile } from "../../types/measurement";
 
 const READY_IN_DAYS = 12;
 
@@ -94,7 +94,26 @@ function Detail({ product }: { product: Product }) {
     );
 
     const [notes, setNotes] = useState("");
-    const [profileId, setProfileId] = useState(PROFILES[0]!.id);
+
+    // Real measurement profiles of the logged-in user
+    const [profiles, setProfiles] = useState<MeasurementProfile[]>([]);
+    const [profileId, setProfileId] = useState<string | null>(null);
+
+    useEffect(() => {
+        axios
+            .get<MeasurementProfile[]>(
+                `${import.meta.env.VITE_API_URL}/api/v1/measurement-profiles`,
+                { withCredentials: true }
+            )
+            .then(({ data }) => {
+                setProfiles(data);
+
+                // The profile chosen with "Use for current order", else the first one
+                const saved = sessionStorage.getItem(CURRENT_PROFILE_KEY);
+                setProfileId(data.find((p) => p.id === saved)?.id ?? data[0]?.id ?? null);
+            })
+            .catch(() => setProfiles([])); // not logged in, or the request failed
+    }, []);
 
     const images = product.thumbnail ? [product.thumbnail] : [];
 
@@ -179,7 +198,6 @@ function Detail({ product }: { product: Product }) {
                             </Text>
                         </Stack>
 
-                        {/* Inner customization scroll area */}
                         <CustomizeCard
                             groups={GROUPS}
                             selected={selected}
@@ -198,7 +216,7 @@ function Detail({ product }: { product: Product }) {
                             basePrice={product.price}
                             extras={extras}
                             readyInDays={READY_IN_DAYS}
-                            profiles={PROFILES}
+                            profiles={profiles}
                             profileId={profileId}
                             onProfile={setProfileId}
                             onAdd={handleAddToCart}
@@ -208,7 +226,5 @@ function Detail({ product }: { product: Product }) {
                 </ScrollArea>
             </Group>
         </Container>
-
-
     );
 }

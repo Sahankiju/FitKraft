@@ -11,7 +11,6 @@ import {
   Divider
 } from "@mantine/core";
 import image from "../../assets/Image/landingPage.avif";
-import classes from "./heroSection.module.css";
 import { useMediaQuery } from "@mantine/hooks";
 
 export default function HeroSection() {
@@ -75,7 +74,7 @@ return (
                       size={isMd ? "md" : "xs"}
                       mt={{ base: "xs", md: "sm" }}
                       w="fit-content"
-                      className={classes.primaryButton}
+                      className="primaryButton"
                     >
                     Browse Designs
                     </Button>

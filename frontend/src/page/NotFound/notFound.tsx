@@ -14,7 +14,7 @@ export default function notFound() {
             page has been moved to another URL. If you think this is an error contact support.
           </Text>
           <Group justify="center">
-            <Button size="md" onClick={() => window.location.href = '/home'}>
+            <Button size="md" onClick={() => window.location.href = '/home'} className="primaryButton">
               Take me back to home page
             </Button>
           </Group>

@@ -12,7 +12,7 @@ import {
 } from "@mantine/core";
 
 import { Link } from "react-router-dom";
-import type { Profile } from "./productData";
+import type { MeasurementProfile } from "../../types/measurement";
 
 type PriceLine = {
     label: string;
@@ -24,8 +24,8 @@ type Props = {
     basePrice: number;
     extras: PriceLine[];
     readyInDays: number;
-    profiles: Profile[];
-    profileId: string;
+    profiles: MeasurementProfile[];
+    profileId: string | null;
     onProfile: (id: string) => void;
     onAdd: () => void;
 };
@@ -43,10 +43,18 @@ export default function SummaryCard({
     onProfile,
     onAdd,
 }: Props) {
-    const options = profiles.map((profile) => ({
+    
+const formatHeight = (inches?: number) =>
+    inches ? `${Math.floor(inches / 12)}'${Math.round(inches % 12)}"` : null;
+
+const options = profiles.map((profile) => {
+    const height = formatHeight(profile.measurements?.height);
+
+    return {
         value: profile.id,
-        label: `${profile.name} · ${profile.chest}" chest`,
-    }));
+        label: height ? `${profile.name} · ${height} height` : profile.name,
+    };
+});
 
     return (
         <Card withBorder radius="md" padding="md">
@@ -105,8 +113,10 @@ export default function SummaryCard({
 
                 {/* Measurement profile */}
                 <Select
+                    classNames={{ input: "inputField" }}
                     size="sm"
                     label="Measuring for"
+                    placeholder="No measurement profiles yet"
                     data={options}
                     value={profileId}
                     onChange={(value) => {
@@ -117,6 +127,7 @@ export default function SummaryCard({
 
                 {/* Add to cart */}
                 <Button
+                    className="primaryButton"
                     fullWidth
                     size="md"
                     onClick={onAdd}

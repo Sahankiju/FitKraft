@@ -23,7 +23,7 @@ export default function SignIn() {
   const loginWithGoogle = async () => {
     await authClient.signIn.social({
       provider: "google",
-      callbackURL: "http://localhost:5173/",
+      callbackURL: "http://localhost:5173/home",
     });
   };
 
@@ -63,6 +63,9 @@ export default function SignIn() {
               </Text>
 
               <TextInput
+                classNames={{
+                  input: "inputField",
+                }}
                 label="Email"
                 placeholder="Enter your email"
                 type="email"
@@ -72,6 +75,9 @@ export default function SignIn() {
               />
 
               <PasswordInput
+                classNames={{
+                  input: "inputField",
+                }}
                 label="Password"
                 placeholder="Enter your password"
                 value={password}
@@ -79,13 +85,14 @@ export default function SignIn() {
                 required
               />
 
-              <Button type="submit" fullWidth>
+              <Button type="submit" fullWidth className="primaryButton">
                 Login
               </Button>
 
               <Divider label="OR" labelPosition="center" />
 
               <Button
+                className="inputField"
                 type="button"
                 variant="default"
                 fullWidth

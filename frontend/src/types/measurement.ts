@@ -15,3 +15,5 @@ export interface MeasurementProfileInput {
     notes: string;
     measurements: Record<string, number>;
 }
+
+export const CURRENT_PROFILE_KEY = "currentMeasurementProfileId";

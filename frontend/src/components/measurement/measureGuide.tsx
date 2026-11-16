@@ -1,6 +1,5 @@
 
-import { Group, Stack, Text } from "@mantine/core";
-import classes from "./measurement.module.css";
+import { Group, Stack, Text, Box } from "@mantine/core";
 
 const TIPS = [
     "Use a soft measuring tape",
@@ -11,19 +10,21 @@ const TIPS = [
 
 export default function MeasureGuide() {
     return (
-        <Stack className={classes.guide} gap="sm">
-            <Text fw={600} className={classes.guideTitle}>
-                How to measure
-            </Text>
+        <Box bd="1px solid var(--line)" bdrs="lg" c="var(--muted)" bg="var(--surface)">
+            <Stack gap="sm" p="md">
+                <Text fw={600} >
+                    How to measure
+                </Text>
 
-            <Stack gap="xs" className={classes.guideList}>
-                {TIPS.map((tip) => (
-                    <Group key={tip} gap="xs" wrap="nowrap" align="flex-start">
-                        <Text c="dimmed" fw={600}>→</Text>
-                        <Text size="sm">{tip}</Text>
-                    </Group>
-                ))}
+                <Stack gap="xs" >
+                    {TIPS.map((tip) => (
+                        <Group key={tip} gap="xs" wrap="nowrap" align="flex-start">
+                            <Text c="dimmed" fw={400}>→</Text>
+                            <Text size="sm">{tip}</Text>
+                        </Group>
+                    ))}
+                </Stack>
             </Stack>
-        </Stack>
+        </Box>
     );
 }

@@ -49,6 +49,9 @@ export default function ProductFilter({
             <Stack gap="sm">
                 {categories.map((category) => (
                     <Checkbox
+                        classNames={{
+                            input: "inputField",
+                        }}
                         key={category.id}
                         label={category.name}
                         checked={selectedCategories.includes(category.id)}
@@ -72,6 +75,9 @@ export default function ProductFilter({
             <Stack gap="sm">
                 {priceRanges.map((range) => (
                     <Checkbox
+                        classNames={{
+                            input: "inputField",
+                        }}
                         key={range.value}
                         label={range.label}
                         checked={selectedPriceRanges.includes(range.value)}
