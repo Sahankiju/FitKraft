@@ -8,14 +8,17 @@ import {
   Flex,
   Center,
   Group,
-  Divider
+  Divider,
+  Title
 } from "@mantine/core";
 import image from "../../assets/Image/landingPage.avif";
 import { useMediaQuery } from "@mantine/hooks";
+import { useNavigate } from "react-router-dom";
 
 export default function HeroSection() {
     
     const isMd = useMediaQuery("(min-width: 768px)");
+    const navitage = useNavigate();
     
 return (
     <Box component="section" w="100%" 
@@ -51,14 +54,14 @@ return (
                       Now available in Nepal
                     </Badge>
 
-                    <Text
+                    <Title
                       fw={{ base: 600, md: 800 }}
                       fz={{ base: "25px", md: "60px" }}
                       lh="1.2"
                       ta="left"
                     >
                       Design Your Perfect Outfit.
-                    </Text>
+                    </Title>
 
                     <Text
                       c="dimmed"
@@ -75,6 +78,7 @@ return (
                       mt={{ base: "xs", md: "sm" }}
                       w="fit-content"
                       className="primaryButton"
+                      onClick={()=>navitage("/product")}
                     >
                     Browse Designs
                     </Button>

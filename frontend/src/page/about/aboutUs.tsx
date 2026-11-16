@@ -1,4 +1,4 @@
-import { Avatar, Group, Paper, Stack, Text, Typography } from '@mantine/core';
+import { Avatar, Group, Paper, Stack, Text, Typography, Title } from '@mantine/core';
 import classes from './aboutUs.module.css';
 
 export default function AboutUs() {
@@ -8,9 +8,9 @@ export default function AboutUs() {
             <Text fw={300} size="15px" c="dimmed">
                 Customer Stories
             </Text>
-            <Text fw={700} size="30px">
+            <Title fw={700} size="30px">
                 What They Say
-            </Text>
+            </Title>
         </Stack>
         <Paper withBorder radius="md" className={classes.comment}>
             <Group>

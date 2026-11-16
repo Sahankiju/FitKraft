@@ -1,9 +1,8 @@
-
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
 import {
-    Container,
     Title,
     Text,
     SimpleGrid,
@@ -11,6 +10,7 @@ import {
     Loader,
     Flex,
     ScrollArea,
+    Box,
 } from "@mantine/core";
 
 import type { Product } from "../../types/product";
@@ -22,28 +22,33 @@ import ProductSort, {
     type SortOption,
 } from "../../components/product/productSort";
 import classes from "./productPage.module.css";
+import { categories } from "../../data/categories";
 
 // Available categories
-const categories = [
-    { id: "1", name: "Shirts" },
-    { id: "2", name: "Pants" },
-    { id: "3", name: "Suits" },
-    { id: "4", name: "Blazers" },
-    { id: "5", name: "Kurta" },
-    { id: "6", name: "Dresses" },
-];
 
 export default function ProductPage() {
+    const [searchParams] = useSearchParams();
+
     // Product data
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
 
     // Filter states
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>(() => {
+        const name = searchParams.get("category");
+        const match = categories.find(
+            (category) => category.name.toLowerCase() === name?.toLowerCase()
+        );
+        return match ? [match.id] : [];
+    });
+
     const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([]);
 
     // Sorting state
-    const [sortBy, setSortBy] = useState<SortOption | null>("featured");
+    const [sortBy, setSortBy] = useState<SortOption | null>(() => {
+        const sort = searchParams.get("sort");
+        return (sort as SortOption) || "newest";
+    });
 
     // Fetch products from backend
     useEffect(() => {
@@ -117,7 +122,7 @@ export default function ProductPage() {
     }, [products, selectedCategories, selectedPriceRanges, sortBy]);
 
      return (
-        <Container size="xl" py="xl">
+        <Box py="xl" w="85%" mx="auto">
 
             {/* Page heading */}
             <Title order={1}>All designs</Title>
@@ -151,7 +156,7 @@ export default function ProductPage() {
                         {/* Sorting */}
                         <Flex justify="flex-end" mb="lg">
                             <ProductSort
-                                value={sortBy ?? "featured"}
+                                value={sortBy ?? "newest"}
                                 onChange={setSortBy}
                             />
                         </Flex>
@@ -184,6 +189,6 @@ export default function ProductPage() {
                     </ScrollArea>
                 </div>
             </Flex>
-        </Container>
+        </Box>
     );
 }

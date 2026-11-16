@@ -1,5 +1,4 @@
 import {
-    Container,
     Stack,
     Group,
     Text,
@@ -8,7 +7,8 @@ import {
     Loader,
     Center,
     Anchor,
-    ScrollArea
+    ScrollArea,
+    Box
 } from "@mantine/core";
 
 import axios from "axios";
@@ -150,11 +150,10 @@ function Detail({ product }: { product: Product }) {
     };
 
     return (
-        <Container
-            size="xl"
-            h="calc(100dvh - 80px)"
+        <Box
+            w="85%"
             py="md"
-            style={{ overflow: "hidden" }}
+            mx="auto"
         >
             <Group
                 align="stretch"
@@ -189,7 +188,7 @@ function Detail({ product }: { product: Product }) {
                         </Title>
 
                         <Stack gap={2}>
-                            <Text fw={700} size="xl">
+                            <Text>
                                 NPR {total.toLocaleString("en-IN")}
                             </Text>
 
@@ -225,6 +224,6 @@ function Detail({ product }: { product: Product }) {
                     </Stack>
                 </ScrollArea>
             </Group>
-        </Container>
+        </Box>
     );
 }

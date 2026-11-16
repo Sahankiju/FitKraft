@@ -4,7 +4,6 @@ import {
     Stack,
     Group,
     Text,
-    Title,
     Divider,
     Select,
     Button,
@@ -66,9 +65,9 @@ const options = profiles.map((profile) => {
                             Total
                         </Text>
 
-                        <Title order={4}>
+                        <Text >
                             {npr(total)}
-                        </Title>
+                        </Text>
                     </Stack>
 
                     <Stack gap={2} align="flex-end">

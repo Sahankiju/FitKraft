@@ -3,11 +3,10 @@ import {
   ScrollArea,
   Stack,
   Group,
-  Badge,
   Text,
   Box,
   Anchor,
-  Divider,
+  Title
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { FeaturedCategories } from "../../components/categories/featuredCategory";
@@ -34,14 +33,10 @@ export default function HomePage() {
                 Browse By
               </Text>
 
-              <Group justify="space-between" align="center">
-                <Text fw={{ base: 600, md: 700 }} fz={{ base: "20px", md: "30px" }}>
+              <Group justify="flex-start" align="center">
+                <Title fw={{ base: 600, md: 700 }} fz={{ base: "20px", md: "30px" }}>
                   Featured Categories
-                </Text>
-
-                <Anchor href="" underline="always" size={isMd ? "md" : "10px"}>
-                  View All
-                </Anchor>
+                </Title>
               </Group>
 
               <FeaturedCategories />
@@ -52,18 +47,13 @@ export default function HomePage() {
           <Box component="section" pt={isMd ? "50px" : "25px"} w="100%">
             <Stack gap={isMd ? 10 : 0} w="100%">
               <Group justify="space-between" align="center">
-                <Text fw={{ base: 600, md: 700 }} fz={{ base: "20px", md: "30px" }}>
+                <Title fw={{ base: 600, md: 700 }} fz={{ base: "20px", md: "30px" }}>
                   Featured Products
-                </Text>
+                </Title>
 
-                <Badge
-                  size={isMd ? "sm" : "xs"}
-                  variant="gradient"
-                  ta="center"
-                  gradient={{ from: "blue", to: "cyan", deg: 90 }}
-                >
-                  Best Seller
-                </Badge>
+                <Anchor href="" underline="always" size={isMd ? "md" : "10px"}>
+                  See All
+                </Anchor>
               </Group>
 
               <BestSeller />
@@ -80,29 +70,7 @@ export default function HomePage() {
             <AboutUs />
           </Box>
         </Stack>
-      </Box>
-
-      {/* Footer */}
-      <Box component="section" pt={isMd ? "50px" : "25px"} w="100%">
-        <Divider w="100%" />
-
-        <Group
-          h={isMd ? "50px" : "25px"}
-          align="center"
-          justify="space-between"
-          c="var(--muted)"
-          w="85%"
-          mx="auto"
-        >
-          <Text fz={{ base: "12px", md: "14px" }}>
-            © 2026 FitKraft · Custom tailoring, delivered across Nepal
-          </Text>
-
-          <Text fz={{ base: "12px", md: "14px" }}>
-            eSewa · Khalti · Cash on delivery
-          </Text>
-        </Group>
-      </Box>
+      </Box>      
     </ScrollArea>
   );
 }

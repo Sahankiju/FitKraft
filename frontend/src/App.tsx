@@ -4,11 +4,12 @@ import "@mantine/notifications/styles.css";
 import "@mantine/core/styles.css";
 import { router } from "./routes/router";
 import { MantineProvider } from "@mantine/core";
+import { theme } from "./theme";
 
 
 export default function App() {
   return (
-    <MantineProvider>
+    <MantineProvider  theme={theme}>
       <Notifications />
       <RouterProvider router={router} />
     </MantineProvider>

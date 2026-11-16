@@ -1,0 +1,11 @@
+.main {
+  width: 100%;
+}
+
+.header {
+  width: 100% !important;
+}
+
+.header > * {
+  width: 100%;
+}

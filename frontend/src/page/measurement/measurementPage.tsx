@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Center, Container, Flex, Group, Loader, Modal, Text, Stack, Box } from "@mantine/core";
+import { Button, Center, Flex, Group, Loader, Modal, Text, Stack, Box } from "@mantine/core";
 
 import type {
     MeasurementProfile,
@@ -191,7 +191,7 @@ export default function MeasurementPage() {
     }
 
     return (
-        <Container size="xl" py="lg" >
+        <Box w="85%" py="lg" mx="auto">
             <Stack gap="lg">
                 {error && (
                     <Text c="red">
@@ -271,6 +271,6 @@ export default function MeasurementPage() {
                     </Button>
                 </Group>
             </Modal>
-        </Container>
+        </Box>
     );
 }

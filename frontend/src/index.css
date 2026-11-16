@@ -61,6 +61,7 @@ body {
     padding: 8px 16px;
     cursor: pointer;
     transition: transform 0.3s ease;
+    box-shadow: var(--shadow);;
 }
 .primaryButton:hover {
     transform: translateY(-2px);
@@ -74,6 +75,7 @@ body {
     padding: 8px 16px;
     cursor: pointer;
     transition: transform 0.3s ease;
+    box-shadow: var(--shadow);
 }
 
 .secondaryButton:hover {
@@ -94,3 +96,4 @@ body {
   border-color: var(--brand);
   outline:none;
 }
+

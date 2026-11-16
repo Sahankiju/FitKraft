@@ -36,7 +36,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                     {product.name}
                 </Text>
 
-                <Text fw={600}>
+                <Text>
                     NPR {product.price.toLocaleString("en-IN")}
                 </Text>
             </Stack>

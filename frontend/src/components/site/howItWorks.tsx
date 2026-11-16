@@ -1,6 +1,7 @@
-import { Box, Button, Group, Stack, Text } from "@mantine/core";
+import { Box, Button, Group, Stack, Text, Title } from "@mantine/core";
 import classes from "./howItWorks.module.css";
 import { useMediaQuery } from "@mantine/hooks";
+import { useNavigate } from "react-router-dom";
 
 const steps = [
   {
@@ -31,15 +32,16 @@ const steps = [
 ];
 
 export default function HowItWorks() {
+  const navigate = useNavigate();
   const isMd = useMediaQuery("(min-width: 768px)");
   return (
     <Box className={classes.content} w="100%">
       <Stack align="center" gap={0} w="100%">
         <Text className={classes.eyebrow} c="dimmed">
-          SIMPLE PROCESS
+          Simple Process
         </Text>
 
-        <Text className={classes.title}>How It Works</Text>
+        <Title className={classes.title}>How It Works</Title>
 
         <Group className={classes.steps} gap={0} align="flex-start">
           {steps.map((step, index) => (
@@ -62,7 +64,7 @@ export default function HowItWorks() {
           ))}
         </Group>
 
-        <Button size={isMd ? "md" : "xs"} mt={{ base: "sm", md: "xl" }} w="fit-content" className="primaryButton">
+        <Button size={isMd ? "md" : "xs"} mt={{ base: "sm", md: "xl" }} w="fit-content" className="primaryButton" onClick={()=>navigate("/product")}>
           Start Your Order
         </Button>
       </Stack>
