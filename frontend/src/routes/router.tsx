@@ -6,10 +6,14 @@ import Register from "../page/register/register";
 import VerifyEmail from "../page/verifications/verifyEmail";
 import NotFound from "../page/NotFound/notFound";
 import ProductPage from "../page/product/productPage";
-import ProductDetailPage from "../page/productDetail/productDetail";
+import { productPageLoader } from "../page/product/productPage.Loader";
+import ProductDetail from "../page/productDetail/productDetail";
+import { productDetailLoader } from "../page/productDetail/productDetail";
 import MeasurementPage from "../page/measurement/measurementPage";
 import CustomisationsPage from "../page/Customisations/CustomisationsPage";
 import AdminRoute from "./adminRoute";
+import RouteError from "./routeError";
+import { measurementLoader } from "../page/measurement/measurement.Loader";
 
 export const router = createBrowserRouter([
   {
@@ -21,20 +25,22 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
     ],
-  
   },
   {
     path: "/product",
-    element:<RootLayout/>,
+    element: <RootLayout />,
     children: [
       {
         index: true,
-        element: <ProductPage/>,
+        element: <ProductPage />,
+        loader: productPageLoader,  
+        errorElement: <RouteError />,
       },
       {
         path: ":id",
-        element: <ProductDetailPage/>,
-                
+        element: <ProductDetail />,
+        loader: productDetailLoader,
+        errorElement: <RouteError />,
       }
     ],
   },
@@ -45,9 +51,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <MeasurementPage />,
+        loader: measurementLoader,
+        errorElement: <RouteError/>
       },
     ],
-  
   },
   {
     element: <AdminRoute />,
@@ -64,7 +71,6 @@ export const router = createBrowserRouter([
       },
     ],
   },
-
 
   { path: "/login", element: <SignIn /> },
   { path: "/register", element: <Register /> },

@@ -1,0 +1,11 @@
+.ProductCard{
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+.ProductCard:hover{
+    transform: translateY(-2px);
+    border-color: var(--clay);
+}

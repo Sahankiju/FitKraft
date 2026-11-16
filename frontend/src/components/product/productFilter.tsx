@@ -1,4 +1,3 @@
-
 import {
     Paper,
     Title,
@@ -7,6 +6,8 @@ import {
     Stack,
     Divider,
 } from "@mantine/core";
+
+import { priceRanges } from "../../data/priceRange";
 
 interface Category {
     id: string;
@@ -20,13 +21,6 @@ interface ProductFilterProps {
     selectedPriceRanges: string[];
     onPriceChange: (range: string, checked: boolean) => void;
 }
-
-const priceRanges = [
-    { label: "Under NPR 3,000", value: "under-3000" },
-    { label: "NPR 3,000 – 7,000", value: "3000-7000" },
-    { label: "NPR 7,000 – 15,000", value: "7000-15000" },
-    { label: "NPR 15,000+", value: "15000-plus" },
-];
 
 export default function ProductFilter({
     categories,
@@ -49,17 +43,12 @@ export default function ProductFilter({
             <Stack gap="sm">
                 {categories.map((category) => (
                     <Checkbox
-                        classNames={{
-                            input: "inputField",
-                        }}
+                        classNames={{ input: "inputField" }}
                         key={category.id}
                         label={category.name}
                         checked={selectedCategories.includes(category.id)}
                         onChange={(event) =>
-                            onCategoryChange(
-                                category.id,
-                                event.currentTarget.checked
-                            )
+                            onCategoryChange(category.id, event.currentTarget.checked)
                         }
                     />
                 ))}
@@ -75,17 +64,12 @@ export default function ProductFilter({
             <Stack gap="sm">
                 {priceRanges.map((range) => (
                     <Checkbox
-                        classNames={{
-                            input: "inputField",
-                        }}
+                        classNames={{ input: "inputField" }}
                         key={range.value}
                         label={range.label}
                         checked={selectedPriceRanges.includes(range.value)}
                         onChange={(event) =>
-                            onPriceChange(
-                                range.value,
-                                event.currentTarget.checked
-                            )
+                            onPriceChange(range.value, event.currentTarget.checked)
                         }
                     />
                 ))}

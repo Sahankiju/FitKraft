@@ -1,7 +1,7 @@
 
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import axios from "axios";
-import { Button, Center, Flex, Group, Loader, Modal, Text, Stack, Box } from "@mantine/core";
+import { Button, Flex, Group, Modal, Text, Stack, Box } from "@mantine/core";
 
 import type {
     MeasurementProfile,
@@ -13,8 +13,9 @@ import MeasurementForm from "../../components/measurement/measurementForm";
 import classes from "../../components/measurement/measurement.module.css";
 import ProfileList, { type NewProfileInput } from "../../components/measurement/profileList";
 import { notifications } from "@mantine/notifications";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { CURRENT_PROFILE_KEY } from "../../types/measurement";
+
 
 const API_URL = `${import.meta.env.VITE_API_URL}/api/v1/measurement-profiles`;
 
@@ -27,33 +28,16 @@ const getErrorMessage = (error: unknown) =>
 
 
 export default function MeasurementPage() {
-    const [profiles, setProfiles] = useState<MeasurementProfile[]>([]);
+    const initialProfiles = useLoaderData() as MeasurementProfile[];
+    const [profiles, setProfiles] = useState<MeasurementProfile[]>(initialProfiles);
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [creating, setCreating] = useState(false);
     const [editing, setEditing] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
     const [confirmOpen, setConfirmOpen] = useState(false); 
     const [draftVersion, setDraftVersion] = useState(0);
     const [newProfileInput, setNewProfileInput] = useState<NewProfileInput | null>(null);
-    
-    // Load all profiles of the logged-in user
-    useEffect(() => {
-        const fetchProfiles = async () => {
-            try {
-                const response = await axios.get<MeasurementProfile[]>( API_URL,request );
-                setProfiles(response.data);
-            } catch (err) {
-                setError(getErrorMessage(err));
-            } finally {
-                setLoading(false);
-            }
-        };
-        
-        fetchProfiles();
-    }, []);
-    
     
     
     const navigate = useNavigate();
@@ -182,13 +166,6 @@ export default function MeasurementPage() {
         }
     };
 
-    if (loading) {
-        return (
-            <Center py="xl">
-                <Loader />
-            </Center>
-        );
-    }
 
     return (
         <Box w="85%" py="lg" mx="auto">

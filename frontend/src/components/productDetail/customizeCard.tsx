@@ -1,4 +1,3 @@
-
 import {
     Card,
     Stack,
@@ -14,6 +13,7 @@ import type { OptionGroup } from "./productData";
 
 type Props = {
     groups: OptionGroup[];
+    loading: boolean;
     selected: Record<string, string>;
     onSelect: (groupId: string, optionId: string) => void;
     notes: string;
@@ -25,6 +25,7 @@ const formatExtra = (amount: number) =>
 
 export default function CustomizeCard({
     groups,
+    loading,
     selected,
     onSelect,
     notes,
@@ -37,54 +38,65 @@ export default function CustomizeCard({
                     Customize your garment
                 </Title>
 
-                {groups.map((group) => (
-                    <Stack key={group.id} gap="sm">
-                        <Text fw={600}>
-                            {group.name}
-                        </Text>
+                {loading ? (
+                    <Text size="sm" c="dimmed">
+                        Loading options…
+                    </Text>
+                ) : groups.length === 0 ? (
+                    <Text size="sm" c="dimmed">
+                        No customization options for this item.
+                    </Text>
+                ) : (
+                    groups.map((group) => (
+                        <Stack key={group.id} gap="sm">
+                            <Text fw={600}>
+                                {group.name}
+                            </Text>
 
-                        <Group gap="xs">
-                            {group.options.map((option) => {
-                                const isActive =
-                                    selected[group.id] === option.id;
+                            <Group gap="xs">
+                                {group.options.map((option) => {
+                                    const isActive =
+                                        selected[group.id] === option.id;
 
-                                return (
-                                    <Button
-                                        key={option.id}
-                                        variant={isActive ? "filled" : "outline"}
-                                        color={isActive ? "var(--brand)" : "var(--muted)"}
-                                        radius="xl"
-                                        size="sm"
-                                        styles={{
-                                            root: {
-                                                backgroundColor: isActive ? undefined : "var(--bg)",
-                                            },
-                                        }}
-                                        onClick={() => onSelect(group.id, option.id)}
-                                    >
-                                        <Stack gap={0} align="center">
-                                            <Text size="sm">
-                                                {option.name}
-                                            </Text>
-
-                                            {option.priceModifier > 0 && (
-                                                <Text size="xs">
-                                                    {formatExtra(option.priceModifier)}
+                                    return (
+                                        <Button
+                                            key={option.id}
+                                            aria-pressed={isActive}
+                                            variant={isActive ? "filled" : "outline"}
+                                            color={isActive ? "var(--brand)" : "var(--muted)"}
+                                            radius="xl"
+                                            size="sm"
+                                            styles={{
+                                                root: {
+                                                    backgroundColor: isActive ? undefined : "var(--bg)",
+                                                },
+                                            }}
+                                            onClick={() => onSelect(group.id, option.id)}
+                                        >
+                                            <Stack gap={0} align="center">
+                                                <Text size="sm">
+                                                    {option.name}
                                                 </Text>
-                                            )}
-                                        </Stack>
-                                    </Button>
-                                );
-                            })}
-                        </Group>
-                    </Stack>
-                ))}
+
+                                                {option.priceModifier > 0 && (
+                                                    <Text size="xs">
+                                                        {formatExtra(option.priceModifier)}
+                                                    </Text>
+                                                )}
+                                            </Stack>
+                                        </Button>
+                                    );
+                                })}
+                            </Group>
+                        </Stack>
+                    ))
+                )}
 
                 <Divider />
 
                 <Textarea
                     classNames={{
-                        input:"inputField"
+                        input: "inputField"
                     }}
                     label="Special notes"
                     placeholder="Anything the tailor should know..."

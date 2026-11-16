@@ -2,6 +2,7 @@
 import { Card, Image, Text, Stack } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import type { Product } from "../../types/product";
+import classes from "./product.module.css"
 
 interface ProductCardProps {
     product: Product;
@@ -12,15 +13,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     return (
         <Card
-            shadow="sm"
+            className={classes.ProductCard}
             padding="md"
-            radius="md"
-            withBorder
             onClick={() => navigate(`/product/${product.id}`)}
-            style={{
-                cursor: "pointer",
-                transition: "transform 150ms ease, box-shadow 150ms ease",
-            }}
         >
             <Card.Section>
                 <Image
