@@ -20,11 +20,19 @@ export default function SignIn() {
 
   const navigate = useNavigate();
 
-  const loginWithGoogle = async () => {
-    await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "http://localhost:5173/home",
-    });
+    const loginWithGoogle = async () => {
+      try {
+          const {  error } = await authClient.signIn.social({
+              provider: "google",
+              callbackURL: "http://localhost:5173/home",
+          });
+
+          if (error) {
+              console.error("Google login failed:", error);
+          }
+      } catch (err) {
+          console.error("Google login error:", err);
+      }
   };
 
   const Login = async (e: React.SubmitEvent) => {

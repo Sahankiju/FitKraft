@@ -123,8 +123,10 @@ export default function MeasurementForm({
                     <Stack gap={4} style={{ flex: 1 }}>
                         {editing && profile ? (
                             <TextInput
+                                classNames={{
+                                    input: "inputField",
+                                }}
                                 placeholder="Profile name, e.g. Myself"
-                                styles={{ input: { backgroundColor: "var(--bg)" } }}
                                 value={name}
                                 onChange={(event) => setName(event.currentTarget.value)}
                                 error={errors.name}
@@ -168,7 +170,7 @@ export default function MeasurementForm({
                 >
                     {MEASUREMENT_FIELDS.map((field) => (
                         <Stack key={field.key} gap="5px">
-                            <Text
+                            <Text                               
                                 className={classes.fieldLabel}
                                 fw={{ base: 200, md: 500 }}
                                 fz={{ base: "12px", md: "15px" }}
@@ -179,10 +181,8 @@ export default function MeasurementForm({
 
                             {editing ? (
                                 <TextInput
-                                    styles={{
-                                        input: {
-                                            backgroundColor: "var(--bg)",
-                                        },
+                                    classNames={{
+                                        input: "inputField",
                                     }}
                                     inputMode="decimal"
                                     value={values[field.key] ?? ""}
@@ -202,10 +202,8 @@ export default function MeasurementForm({
                                 />
                             ) : (
                                 <Input
-                                    styles={{
-                                        input: {
-                                            backgroundColor: "var(--bg)",
-                                        },
+                                    classNames={{
+                                        input: "inputField",
                                     }}
                                     value={profile?.measurements[field.key] ?? "—"}
                                     readOnly
@@ -238,10 +236,8 @@ export default function MeasurementForm({
 
                     {editing ? (
                         <Textarea
-                            styles={{
-                                    input: {
-                                        backgroundColor: "var(--bg)",
-                                    },
+                            classNames={{
+                                input: "inputField",
                             }}
                             value={notes}
                             onChange={(event) =>
